@@ -202,3 +202,7 @@
   opacity: 0;
   transform: translateY(50px);
 }
+
+body {
+  user-select: none;
+}

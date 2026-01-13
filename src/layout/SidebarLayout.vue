@@ -74,13 +74,8 @@ const items = computed(() => [
     <SidebarFooter>
       <SidebarMenu>
         <SidebarMenuItem v-if="!isMobile">
-          <SidebarMenuButton as-child @click="toggleSidebar">
-            <span v-if="open">
-              <PanelLeftClose />
-            </span>
-            <span v-else>
-              <PanelLeftOpen />
-            </span>
+          <SidebarMenuButton @click="toggleSidebar">
+            <component :is="open ? PanelLeftClose : PanelLeftOpen" />
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarMenu>
