@@ -12,5 +12,8 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "i18n-ally.localesPaths": ["src/i18n"],
   "i18n-ally.sourceLanguage": "zh",
-  "i18n-ally.keystyle": "nested"
+  "i18n-ally.keystyle": "nested",
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer"
+  }
 }
