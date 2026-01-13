@@ -1,6 +1,9 @@
 {
   "common": {
-    "title": "Vue 项目模板"
+    "title": "LLM Gate",
+    "home": "主页",
+    "collapse": "折叠",
+    "expand": "展开"
   },
   "settings": {
     "title": "设置",

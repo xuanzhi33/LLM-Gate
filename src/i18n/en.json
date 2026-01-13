@@ -1,6 +1,9 @@
 {
   "common": {
-    "title": "Vue Project Template"
+    "title": "LLM Gate",
+    "home": "Home",
+    "collapse": "Collapse",
+    "expand": "Expand"
   },
   "settings": {
     "title": "Settings",

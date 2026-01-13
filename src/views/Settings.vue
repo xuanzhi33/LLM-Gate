@@ -27,10 +27,10 @@ const sectionTitleClass = 'font-semibold text-muted-foreground border-b pt-3 pb-
 </script>
 
 <template>
-  <div class="p-5 overflow-y-auto h-full">
-    <div class="max-w-2xl mx-auto">
-      <h1 class="text-3xl font-extrabold mb-2 pt-3 flex items-center">
-        <Settings class="mr-2 size-8" />
+  <div class="p-4 overflow-y-auto h-full">
+    <div class="mx-auto">
+      <h1 class="text-2xl font-extrabold mb-2 flex items-center">
+        <Settings class="mr-2 size-6" />
         {{ t('settings.title') }}
       </h1>
       <section class="space-y-3">

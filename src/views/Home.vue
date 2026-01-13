@@ -9,7 +9,7 @@ const router = useRouter()
 </script>
 
 <template>
-  <div class="p-3">
+  <div class="p-4">
     <h1 class="text-xl mb-3">
       {{ t('common.title') }}
     </h1>
