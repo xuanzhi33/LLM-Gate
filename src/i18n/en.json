@@ -1,0 +1,22 @@
+{
+  "common": {
+    "title": "Vue Project Template"
+  },
+  "settings": {
+    "title": "Settings",
+    "interface": {
+      "title": "User Interface",
+      "colorMode": "Color Mode",
+      "colorModeOptions": {
+        "light": "Light Mode",
+        "dark": "Dark Mode",
+        "system": "Follow System"
+      },
+      "language": "Language",
+      "languageOptions": {
+        "en": "English",
+        "zh": "Chinese (Simplified) - 简体中文"
+      }
+    }
+  }
+}
