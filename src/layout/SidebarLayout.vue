@@ -16,7 +16,7 @@ import {
 
 import appIcon from '../../app-icon.png'
 
-import { Home, PanelLeftClose, PanelLeftOpen, Settings } from 'lucide-vue-next';
+import { Home, Package, PanelLeftClose, PanelLeftOpen, Settings } from 'lucide-vue-next';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
@@ -30,6 +30,11 @@ const items = computed(() => [
     title: t('common.home'),
     name: 'home',
     icon: Home,
+  },
+  {
+    title: t('models.title'),
+    name: 'models',
+    icon: Package,
   },
   {
     title: t('settings.title'),
