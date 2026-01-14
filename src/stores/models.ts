@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
 import { loadJSON, saveJSON } from '@/utils/app-data'
+import { useDebounceFn } from '@vueuse/core'
 export type ModelConfig = {
   id: string
   model?: string
@@ -40,9 +41,10 @@ export const useModelConfigStore = defineStore('modelConfig', () => {
     configs.value = []
   }
 
-  const saveToDisk = async () => {
+  const saveToDisk = useDebounceFn(async () => {
     saveJSON(configs.value, CONFIG_FILE)
-  }
+  }, 1000)
+
   const loadFromDisk = async () => {
     const data = await loadJSON<ModelConfig[]>(CONFIG_FILE)
     if (data) {
