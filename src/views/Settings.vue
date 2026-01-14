@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia'
 import { useSettingsStore } from '@/stores/settings'
 import SettingsItem from '@/components/settings/SettingsItem.vue'
 import { computed } from 'vue'
-import { AppWindow, Languages, Settings, SunMoon } from 'lucide-vue-next'
+import { AppWindow, Languages, LucideLogs, Settings, Settings2, SunMoon } from 'lucide-vue-next'
 const settingsStore = useSettingsStore()
 const { colorMode, language } = storeToRefs(settingsStore)
 
@@ -22,7 +22,7 @@ const localeOptions = computed(() => availableLocales.map(loc => ({
   value: loc
 })))
 
-const sectionTitleClass = 'font-semibold text-muted-foreground border-b pt-3 pb-2'
+const sectionTitleClass = 'font-semibold text-muted-foreground border-b pt-3 pb-2 flex items-center'
 
 </script>
 
@@ -34,7 +34,7 @@ const sectionTitleClass = 'font-semibold text-muted-foreground border-b pt-3 pb-
         {{ t('settings.title') }}
       </h1>
       <section class="space-y-3">
-        <h2 :class="sectionTitleClass" class="flex items-center">
+        <h2 :class="sectionTitleClass">
           <AppWindow class="mr-2" />
           {{ t('settings.interface.title') }}
         </h2>
@@ -44,6 +44,14 @@ const sectionTitleClass = 'font-semibold text-muted-foreground border-b pt-3 pb-
 
         <SettingsItem v-model="language" :label="t('settings.interface.language')" type="select" :icon="Languages"
           :options="localeOptions" />
+      </section>
+      <section class="space-y-3 mt-3">
+        <h2 :class="sectionTitleClass">
+          <Settings2 class="mr-2" />
+          {{ t('settings.app.title') }}
+        </h2>
+        <SettingsItem :icon="LucideLogs" v-model="settingsStore.enableLogging" :label="t('settings.app.enableLogging')"
+          type="switch" />
       </section>
     </div>
   </div>

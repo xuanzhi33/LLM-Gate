@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Switch } from '@/components/ui/switch'
 import type { Component } from 'vue'
 
 interface Option {
@@ -18,7 +19,7 @@ interface Option {
 export interface SettingsItemProps {
   label: string
   description?: string
-  type?: 'input' | 'password' | 'select'
+  type?: 'input' | 'password' | 'select' | 'switch'
   placeholder?: string
   options?: Option[]
   icon?: Component
@@ -28,7 +29,7 @@ const props = withDefaults(defineProps<SettingsItemProps>(), {
   type: 'input',
 })
 
-const modelValue = defineModel<string>()
+const modelValue = defineModel<string | boolean>()
 </script>
 
 <template>
@@ -38,11 +39,8 @@ const modelValue = defineModel<string>()
       {{ label }}
     </Label>
 
-    <template v-if="type === 'input' || type === 'password'">
-      <Input :id="label" v-model="modelValue" :type="type" :placeholder="placeholder" />
-    </template>
 
-    <template v-else-if="type === 'select'">
+    <template v-if="type === 'select' && typeof modelValue === 'string'">
       <Select v-model="modelValue">
         <SelectTrigger :id="label">
           <SelectValue>
@@ -55,6 +53,12 @@ const modelValue = defineModel<string>()
           </SelectItem>
         </SelectContent>
       </Select>
+    </template>
+    <template v-else-if="type === 'switch' && typeof modelValue === 'boolean'">
+      <Switch v-model="modelValue" :id="label" />
+    </template>
+    <template v-else-if="typeof modelValue === 'string'">
+      <Input :id="label" v-model="modelValue" :type="type" :placeholder="placeholder" />
     </template>
 
     <p v-if="description" class="text-sm text-muted-foreground">

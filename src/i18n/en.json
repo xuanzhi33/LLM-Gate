@@ -20,6 +20,10 @@
         "en": "English",
         "zh": "Chinese (Simplified) - 简体中文"
       }
+    },
+    "app": {
+      "title": "Miscellaneous",
+      "enableLogging": "Enable debug logging"
     }
   }
 }

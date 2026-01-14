@@ -23,6 +23,9 @@ export const useSettingsStore = defineStore('settings', () => {
   const colorMode = ref(
     (localStorage.getItem(LOCAL_STORAGE_KEY_PREFIX + 'color-mode') as ColorMode) || 'system',
   )
+  const enableLogging = ref(
+    localStorage.getItem(LOCAL_STORAGE_KEY_PREFIX + 'enable-logging') === 'true' || false,
+  )
 
   const persist = (key: string, value: string) => {
     localStorage.setItem(LOCAL_STORAGE_KEY_PREFIX + key, value)
@@ -31,9 +34,10 @@ export const useSettingsStore = defineStore('settings', () => {
   const saveSettings = () => {
     persist('color-mode', colorMode.value)
     persist('language', language.value)
+    persist('enable-logging', enableLogging.value ? 'true' : 'false')
   }
 
-  watch([colorMode, language], saveSettings)
+  watch([colorMode, language, enableLogging], saveSettings)
 
   const isDarkMode = computed(() => {
     if (colorMode.value === 'dark') return true
@@ -59,5 +63,6 @@ export const useSettingsStore = defineStore('settings', () => {
     language,
     applyColorMode,
     applyLanguage,
+    enableLogging,
   }
 })

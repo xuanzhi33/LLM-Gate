@@ -20,6 +20,10 @@
         "en": "英语 - English",
         "zh": "简体中文 - Chinese (Simplified)"
       }
+    },
+    "app": {
+      "title": "杂项设置",
+      "enableLogging": "启用调试日志"
     }
   }
 }
