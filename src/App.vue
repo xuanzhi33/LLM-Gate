@@ -4,11 +4,15 @@ import { RouterView } from 'vue-router'
 import { useSettingsStore } from './stores/settings';
 import SidebarLayout from './layout/SidebarLayout.vue';
 import { SidebarProvider } from './components/ui/sidebar';
+import { useModelConfigStore } from './stores/models';
 
 onMounted(() => {
   const settingsStore = useSettingsStore();
+  const modelsStore = useModelConfigStore();
   settingsStore.applyColorMode();
   settingsStore.applyLanguage();
+
+  modelsStore.loadFromDisk();
 });
 </script>
 
