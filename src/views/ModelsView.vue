@@ -99,7 +99,7 @@ const confirmDelete = () => {
     </InputGroup>
 
     <!-- Models list -->
-    <div v-if="filteredModels.length > 0" class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+    <div v-if="filteredModels.length > 0" class="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
       <TransitionGroup name="list">
 
         <ModelCard v-for="model in filteredModels" :key="model.id" :model="model" :is-new="model.id === newlyCreatedId"

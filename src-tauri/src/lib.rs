@@ -10,10 +10,9 @@ pub fn run() {
         )
         .plugin(tauri_plugin_fs::init())
         .setup(|app| {
-            let main_window = app.get_webview_window("main").unwrap();
+            let _ = app.get_webview_window("main").unwrap();
             if cfg!(debug_assertions) {
                 println!("App started in debug mode");
-                main_window.open_devtools();
             }
             Ok(())
         })
