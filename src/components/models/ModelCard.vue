@@ -56,7 +56,7 @@ const validateId = (val: string) => {
           {{ getDomainName(model.baseUrl || "") || model.id }}
         </div>
         <Badge v-if="model.model" class="ml-2" variant="secondary">
-          {{ model.model }}
+          {{ model.model.split('/').pop() }}
         </Badge>
       </CardTitle>
       <CardAction class="-m-1">
