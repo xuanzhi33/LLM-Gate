@@ -142,7 +142,7 @@ const handleKeydown = (e: KeyboardEvent) => {
                     <Tooltip>
                       <TooltipTrigger as-child>
                         <div
-                          :class="cn('font-mono truncate text-sm max-w-44', type === 'password' ? 'text-muted-foreground' : '')">
+                          :class="cn('font-mono truncate text-sm max-w-54', type === 'password' ? 'text-muted-foreground' : '')">
                           {{ type === 'password' ? '•'.repeat(6) : modelValue }}
                         </div>
                       </TooltipTrigger>
