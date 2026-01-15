@@ -3,7 +3,14 @@
     "title": "LLM Gate",
     "home": "Home",
     "collapse": "Collapse",
-    "expand": "Expand"
+    "expand": "Expand",
+    "fill": "Fill",
+    "copy": "Copy",
+    "copied": "Copied",
+    "edit": "Edit",
+    "empty": "Empty",
+    "modelCount": "No models | 1 model | {count} models",
+    "resultCount": "No results | 1 result | {count} results"
   },
   "settings": {
     "title": "Settings",
@@ -24,6 +31,42 @@
     "app": {
       "title": "Miscellaneous",
       "enableLogging": "Enable debug logging"
+    }
+  },
+  "models": {
+    "title": "Models",
+    "search": "Search models...",
+    "add": "Add Model",
+    "edit": "Edit Model",
+    "delete": "Delete Model",
+    "empty": "No models configured yet",
+    "emptyFiltered": "No models match your search",
+    "form": {
+      "id": "Model ID",
+      "idPlaceholder": "Unique model ID",
+      "idDesc": "Leave empty to auto-generate",
+      "model": "Model Name",
+      "modelPlaceholder": "e.g., gpt-4",
+      "modelDesc": "Leave empty to keep the model from the original request",
+      "baseUrl": "Base URL",
+      "baseUrlPlaceholder": "e.g., https://api.openai.com/v1",
+      "baseUrlDesc": "Ending with /v1",
+      "apiKey": "API Key",
+      "apiKeyPlaceholder": "e.g., sk-xxxxxx",
+      "apiKeyDesc": "Leave empty to keep the original API Key from the request headers",
+      "cancel": "Cancel",
+      "save": "Save",
+      "create": "Create"
+    },
+    "deleteConfirm": {
+      "title": "Delete Model",
+      "description": "Are you sure you want to delete this model? This action cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Delete"
+    },
+    "errors": {
+      "idRequired": "Model ID is required",
+      "idExists": "Model ID already exists"
     }
   }
 }

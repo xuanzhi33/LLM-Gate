@@ -203,6 +203,31 @@
   transform: translateY(50px);
 }
 
+.list-enter-active,
+.list-leave-active,
+.list-move {
+  transition: all 0.15s;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+}
+
 body {
   user-select: none;
+}
+
+@keyframes border-flash {
+  0% {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--primary);
+  }
+  100% {
+    border-color: var(--border);
+    box-shadow: none;
+  }
+}
+
+.animate-flash-border {
+  animation: border-flash 1s ease-out;
 }

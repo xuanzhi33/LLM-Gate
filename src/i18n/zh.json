@@ -3,7 +3,14 @@
     "title": "LLM Gate",
     "home": "主页",
     "collapse": "折叠",
-    "expand": "展开"
+    "expand": "展开",
+    "fill": "填写",
+    "copy": "复制",
+    "copied": "已复制",
+    "edit": "编辑",
+    "empty": "未填写",
+    "modelCount": "暂无模型 | 共 1 个模型 | 共 {count} 个模型",
+    "resultCount": "无结果 | 共 1 个结果 | 共 {count} 个结果"
   },
   "settings": {
     "title": "设置",
@@ -24,6 +31,42 @@
     "app": {
       "title": "杂项设置",
       "enableLogging": "启用调试日志"
+    }
+  },
+  "models": {
+    "title": "模型管理",
+    "search": "搜索模型...",
+    "add": "添加模型",
+    "edit": "编辑模型",
+    "delete": "删除模型",
+    "empty": "暂无配置的模型",
+    "emptyFiltered": "没有匹配的模型",
+    "form": {
+      "id": "模型 ID",
+      "idPlaceholder": "全局唯一模型 ID",
+      "idDesc": "留空则自动生成",
+      "model": "模型名称",
+      "modelPlaceholder": "例如：gpt-4",
+      "modelDesc": "留空则保留原始请求中的模型",
+      "baseUrl": "提供商 Base URL",
+      "baseUrlPlaceholder": "例如：https://api.openai.com/v1",
+      "baseUrlDesc": "以 /v1 结尾",
+      "apiKey": "API Key",
+      "apiKeyPlaceholder": "例如：sk-xxxxxx",
+      "apiKeyDesc": "留空则保留原始请求头中的 API Key",
+      "cancel": "取消",
+      "save": "保存",
+      "create": "创建"
+    },
+    "deleteConfirm": {
+      "title": "删除模型",
+      "description": "确定要删除此模型吗？此操作无法撤销。",
+      "cancel": "取消",
+      "confirm": "删除"
+    },
+    "errors": {
+      "idRequired": "模型 ID 不能为空",
+      "idExists": "模型 ID 已存在"
     }
   }
 }

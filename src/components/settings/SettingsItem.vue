@@ -35,7 +35,7 @@ const modelValue = defineModel<string | boolean>()
 <template>
   <div class="space-y-1.5">
     <Label :for="label" class="text-sm font-medium text-muted-foreground">
-      <component :is="icon" v-if="icon" class="size-6" />
+      <component :is="icon" v-if="icon" class="size-5" />
       {{ label }}
     </Label>
 
