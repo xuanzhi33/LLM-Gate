@@ -30,7 +30,10 @@
     },
     "app": {
       "title": "杂项设置",
-      "enableLogging": "启用调试日志"
+      "enableLogging": "启用调试日志",
+      "serverPort": "服务端口",
+      "serverPortDesc": "重启服务后生效",
+      "enableLoggingDesc": "将软件运行信息写入日志文件，不建议开启。"
     }
   },
   "models": {

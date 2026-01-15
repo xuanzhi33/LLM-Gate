@@ -30,7 +30,10 @@
     },
     "app": {
       "title": "Miscellaneous",
-      "enableLogging": "Enable debug logging"
+      "enableLogging": "Enable debug logging",
+      "serverPort": "Server Port",
+      "serverPortDesc": "Restart required.",
+      "enableLoggingDesc": "Write software running information to the log file. It is not recommended to turn it on."
     }
   },
   "models": {
