@@ -52,10 +52,10 @@ const validateId = (val: string) => {
     <CardHeader class="-m-3">
       <CardTitle class="flex items-center">
         <Sparkle class="size-6 mr-2" />
-        <div class="capitalize">
+        <div class="capitalize max-w-32 truncate">
           {{ getDomainName(model.baseUrl || "") || model.id }}
         </div>
-        <Badge v-if="model.model" class="ml-2" variant="secondary">
+        <Badge v-if="model.model" class="ml-2 max-w-28" variant="secondary">
           {{ model.model.split('/').pop() }}
         </Badge>
       </CardTitle>
