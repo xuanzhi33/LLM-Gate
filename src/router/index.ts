@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '@/views/Home.vue'
-import Settings from '@/views/Settings.vue'
-import Models from '@/views/Models.vue'
+import HomeView from '@/views/HomeView.vue'
+import Settings from '@/views/SettingsView.vue'
+import Models from '@/views/ModelsView.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
