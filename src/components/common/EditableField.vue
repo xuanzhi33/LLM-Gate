@@ -17,6 +17,7 @@ import InputGroup from '../ui/input-group/InputGroup.vue'
 import InputGroupInput from '../ui/input-group/InputGroupInput.vue'
 import { InputGroupAddon, InputGroupButton } from '../ui/input-group'
 import { nanoid } from 'nanoid'
+import { toast } from 'vue-sonner'
 
 interface Props {
   label: string
@@ -75,6 +76,7 @@ const handleSave = async () => {
     const validationError = props.validate(localValue.value)
     if (validationError) {
       error.value = validationError
+      toast.error(validationError)
       return
     }
   }
@@ -198,9 +200,6 @@ const handleKeydown = (e: KeyboardEvent) => {
                   </InputGroupButton>
                 </InputGroupAddon>
               </InputGroup>
-              <Transition>
-                <p v-if="error" class="text-sm text-destructive mt-2">{{ error }}</p>
-              </Transition>
             </div>
           </div>
         </TooltipTrigger>
