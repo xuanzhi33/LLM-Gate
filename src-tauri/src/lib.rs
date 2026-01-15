@@ -1,6 +1,7 @@
 use tauri::Manager;
 
 pub mod config;
+pub mod proxy;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -14,8 +15,11 @@ pub fn run() {
         .setup(|app| {
             let _ = app.get_webview_window("main").unwrap();
             if cfg!(debug_assertions) {
-                println!("App started in debug mode");
+                log::info!("App started in debug mode");
             }
+
+            proxy::start_proxy(app.handle().clone(), 11456);
+
             Ok(())
         })
         .run(tauri::generate_context!())
