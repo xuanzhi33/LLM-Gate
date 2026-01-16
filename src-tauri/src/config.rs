@@ -1,6 +1,7 @@
+use log::debug;
 use serde::{Deserialize, Serialize};
 use std::fs;
-use tauri::{AppHandle, Manager, path::BaseDirectory};
+use tauri::{path::BaseDirectory, AppHandle, Manager};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -12,7 +13,9 @@ pub struct ModelConfig {
 }
 
 pub fn load_model_config(app: &AppHandle) -> Result<Vec<ModelConfig>, String> {
-    let config_path = app.path().resolve("model-config.json", BaseDirectory::AppLocalData)
+    let config_path = app
+        .path()
+        .resolve("model-config.json", BaseDirectory::AppLocalData)
         .map_err(|e| format!("Failed to resolve config path: {}", e))?;
 
     if !config_path.exists() {
@@ -25,5 +28,6 @@ pub fn load_model_config(app: &AppHandle) -> Result<Vec<ModelConfig>, String> {
     let configs: Vec<ModelConfig> = serde_json::from_str(&content)
         .map_err(|e| format!("Failed to parse config file: {}", e))?;
 
+    debug!("Model configurations loaded from {}", config_path.display());
     Ok(configs)
 }

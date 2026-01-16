@@ -7,11 +7,6 @@ pub mod proxy;
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
-        .plugin(
-            tauri_plugin_log::Builder::new()
-                .level(tauri_plugin_log::log::LevelFilter::Info)
-                .build(),
-        )
         .plugin(tauri_plugin_fs::init())
         .manage(proxy::ProxyState::new())
         .invoke_handler(tauri::generate_handler![
@@ -22,6 +17,19 @@ pub fn run() {
             let _ = app.get_webview_window("main").unwrap();
             if cfg!(debug_assertions) {
                 info!("App started in debug mode");
+                // In debug mode, set log level to Debug
+                app.handle().plugin(
+                    tauri_plugin_log::Builder::default()
+                        .level(log::LevelFilter::Debug)
+                        .build(),
+                )?;
+            } else {
+                // In release mode, set log level to Info
+                app.handle().plugin(
+                    tauri_plugin_log::Builder::default()
+                        .level(log::LevelFilter::Info)
+                        .build(),
+                )?;
             }
 
             Ok(())

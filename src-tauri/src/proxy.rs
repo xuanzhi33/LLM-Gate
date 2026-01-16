@@ -9,7 +9,7 @@ use axum::{
 use bytes::Bytes;
 use futures::future::AbortHandle;
 use http_body_util::BodyExt;
-use log::{debug, error, info, warn};
+use log::{debug, error, warn};
 use reqwest::Client;
 use std::future::IntoFuture;
 use std::sync::{Arc, Mutex};
@@ -68,7 +68,7 @@ pub async fn start_proxy_server(
         .layer(CorsLayer::permissive())
         .with_state(state);
 
-    info!("Attempting to start proxy on {}", addr_str);
+    debug!("Attempting to start proxy on {}", addr_str);
 
     let listener = TcpListener::bind(&addr_str)
         .await
@@ -104,11 +104,11 @@ pub async fn start_proxy_server(
                 if let Err(e) = result {
                     error!("Proxy server error: {}", e);
                 } else {
-                    info!("Proxy server stopped gracefully.");
+                    debug!("Proxy server stopped gracefully.");
                 }
             }
             Err(_) => {
-                info!("Proxy server aborted.");
+                debug!("Proxy server aborted.");
             }
         }
     });
@@ -125,7 +125,7 @@ pub async fn stop_proxy_server(proxy_state: TauriState<'_, ProxyState>) -> Resul
 
     if let Some(handle) = handle_guard.take() {
         handle.abort();
-        info!("Proxy server stop signal sent.");
+        debug!("Proxy server stop signal sent.");
         Ok("Proxy server stopped".to_string())
     } else {
         Err("Proxy server is not running".to_string())
@@ -221,7 +221,7 @@ async fn proxy_handler(
         .headers(req_headers)
         .body(final_body);
 
-    info!("Forwarding {} request to upstream: {}", method, target_url);
+    debug!("Forwarding {} request to upstream: {}", method, target_url);
 
     let res = req.send().await.map_err(|e| {
         error!("Upstream request failed: {}", e);
