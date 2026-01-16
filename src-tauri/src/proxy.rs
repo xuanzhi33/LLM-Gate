@@ -13,7 +13,7 @@ use log::{debug, error, warn};
 use reqwest::Client;
 use std::future::IntoFuture;
 use std::sync::{Arc, Mutex};
-use tauri::{AppHandle, State as TauriState};
+use tauri::{AppHandle, Emitter, State as TauriState};
 use tokio::net::TcpListener;
 use tower_http::cors::CorsLayer;
 
@@ -113,11 +113,25 @@ pub async fn start_proxy_server(
         }
     });
 
+    app_handle
+        .emit(
+            "proxy-status-change",
+            serde_json::json!({
+                "status": "running",
+                "host": host,
+                "port": port,
+            }),
+        )
+        .map_err(|e| e.to_string())?;
+
     Ok(format!("Proxy server started on {}", addr))
 }
 
 #[tauri::command]
-pub async fn stop_proxy_server(proxy_state: TauriState<'_, ProxyState>) -> Result<String, String> {
+pub async fn stop_proxy_server(
+    app_handle: AppHandle,
+    proxy_state: TauriState<'_, ProxyState>,
+) -> Result<String, String> {
     let mut handle_guard = proxy_state
         .server_handle
         .lock()
@@ -126,6 +140,18 @@ pub async fn stop_proxy_server(proxy_state: TauriState<'_, ProxyState>) -> Resul
     if let Some(handle) = handle_guard.take() {
         handle.abort();
         debug!("Proxy server stop signal sent.");
+
+        app_handle
+            .emit(
+                "proxy-status-change",
+                serde_json::json!({
+                    "status": "stopped",
+                    "host": "",
+                    "port": 0,
+                }),
+            )
+            .map_err(|e| e.to_string())?;
+
         Ok("Proxy server stopped".to_string())
     } else {
         Err("Proxy server is not running".to_string())
@@ -139,6 +165,18 @@ async fn proxy_handler(
     headers: HeaderMap,
     body: Body,
 ) -> Result<Response, StatusCode> {
+    // Emit request event
+    if let Err(e) = state.app_handle.emit(
+        "proxy-request",
+        serde_json::json!({
+            "method": method.to_string(),
+            "model_id": model_id,
+            "path": path
+        }),
+    ) {
+        warn!("Failed to emit proxy request event: {}", e);
+    }
+
     debug!("Incoming request: {} /{}/v1/{}", method, model_id, path);
 
     // 1. Load config
