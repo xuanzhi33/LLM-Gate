@@ -4,18 +4,34 @@
 
 LLM Gate is a Tauri-based desktop application for proxying LLM API requests with automatic key injection and CORS support. It's a hybrid architecture with Vue 3 frontend and Rust backend.
 
-**Stack**: Tauri v2 + Vue 3 + TypeScript + Vite + Pinia + shadcn-vue (reka-ui) + Tailwind CSS 4
+**Stack**: 
+- **Frontend**: Tauri v2 + Vue 3 + TypeScript + Vite + Pinia + shadcn-vue (reka-ui) + Tailwind CSS 4
+- **Backend**: Rust + Axum (HTTP Server) + Reqwest (HTTP Client) + Tokio (Async Runtime)
 
 ## Architecture
 
 ### Frontend-Backend Communication
 
 - **Frontend**: Vue SPA with hash routing (`createWebHashHistory`).
-- **Backend**: Tauri Rust plugins for native OS interactions.
+- **Backend**: Tauri Rust plugins for native OS interactions and a custom `axum` proxy server.
 - **Data Persistence**: 
   - **App Data**: Uses Tauri's `plugin-fs` writing to `BaseDirectory.AppLocalData` (JSON files).
   - **Settings**: Uses `localStorage` with prefix `xuanzhi33-`.
 - **State**: Pinia stores. `useModelConfigStore` auto-saves to local JSON files; `useSettingsStore` auto-saves to `localStorage`.
+
+### Proxy Architecture
+
+The core feature is a local proxy server running within the Tauri application:
+
+1.  **Start/Stop**: Controlled via Tauri commands (`start_proxy_server`, `stop_proxy_server`).
+2.  **Server**: Uses `axum` to listen on a user-defined host and port.
+3.  **Routing**: Intercepts requests to `/{model_id}/v1/{*path}`.
+4.  **Handling**:
+    -   Loads model configuration (Base URL, API Key) from `model-config.json` (shared with frontend).
+    -   Injects `Authorization: Bearer <key>` header.
+    -   Optionally overrides `model` body parameter for chat completions.
+    -   Forwards request to upstream provider using `reqwest`.
+    -   Streams response back to the client.
 
 ### Key Integration Pattern
 
@@ -97,6 +113,7 @@ Uses **shadcn-vue** (reka-ui primitives) with New York style:
 ## Common Utilities & Components
 
 - **App Data**: `src/utils/app-data.ts` - Abstraction for Tauri FS (JSON/Text).
+- **Proxy Client**: `src/utils/proxy.ts` - Wrapper for proxy-related Tauri commands.
 - **Logging**: `src/utils/log.ts` - Structured logging using `tauri-plugin-log`.
 - **URL Utils**: `src/utils/url.ts` - Domain name extraction and normalization.
 - **EditableField**: `src/components/common/EditableField.vue` - Reusable field for viewing/editing values with validation and copy-to-clipboard support.
@@ -143,13 +160,18 @@ Main window config in `src-tauri/tauri.conf.json`:
 - `src/stores/models.ts` - Model configuration store with auto-persistence.
 - `src/stores/settings.ts` - App settings (theme, language, logging).
 - `src/utils/app-data.ts` - Tauri FS abstraction layer.
-- `src-tauri/src/lib.rs` - Tauri plugins initialization.
+
+### Backend (Rust)
+
+- `src-tauri/src/lib.rs` - Entry point, plugin initialization, logging setup.
+- `src-tauri/src/proxy.rs` - **Core Logic**: Axum server implementation, request forwarding, `start`/`stop` commands.
+- `src-tauri/src/config.rs` - Backend configuration loader (reads `model-config.json` directly).
 
 ## Common Tasks
 
 **Adding a new UI component**: Use shadcn-vue patterns with reka-ui primitives. Follow existing components in `src/components/ui/`.
 
-**Adding Tauri commands**: Define in `src-tauri/src/lib.rs`, export via `#[tauri::command]`, invoke from frontend via `@tauri-apps/api`.
+**Adding Tauri commands**: Define in `src-tauri/src/lib.rs` (or a module like `proxy.rs`), export via `#[tauri::command]`, invoke from frontend via `@tauri-apps/api`.
 
 **Adding translations**: Update both `src/i18n/en.json` and `src/i18n/zh.json` with matching keys.
 
