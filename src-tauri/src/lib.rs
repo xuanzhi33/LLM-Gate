@@ -1,3 +1,4 @@
+use log::info;
 use tauri::Manager;
 
 pub mod config;
@@ -12,13 +13,16 @@ pub fn run() {
                 .build(),
         )
         .plugin(tauri_plugin_fs::init())
+        .manage(proxy::ProxyState::new())
+        .invoke_handler(tauri::generate_handler![
+            proxy::start_proxy_server,
+            proxy::stop_proxy_server
+        ])
         .setup(|app| {
             let _ = app.get_webview_window("main").unwrap();
             if cfg!(debug_assertions) {
-                log::info!("App started in debug mode");
+                info!("App started in debug mode");
             }
-
-            proxy::start_proxy(app.handle().clone(), 11456);
 
             Ok(())
         })

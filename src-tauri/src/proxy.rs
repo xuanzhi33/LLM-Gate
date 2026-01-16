@@ -7,10 +7,14 @@ use axum::{
     Router,
 };
 use bytes::Bytes;
+use futures::future::AbortHandle;
 use http_body_util::BodyExt;
 use log::{debug, error, info, warn};
 use reqwest::Client;
-use tauri::AppHandle;
+use std::future::IntoFuture;
+use std::sync::{Arc, Mutex};
+use tauri::{AppHandle, State as TauriState};
+use tokio::net::TcpListener;
 use tower_http::cors::CorsLayer;
 
 use crate::config::load_model_config;
@@ -21,34 +25,111 @@ struct AppState {
     client: Client,
 }
 
-pub fn start_proxy(app_handle: AppHandle, port: u16) {
+pub struct ProxyState {
+    pub server_handle: Arc<Mutex<Option<AbortHandle>>>,
+}
+
+impl ProxyState {
+    pub fn new() -> Self {
+        Self {
+            server_handle: Arc::new(Mutex::new(None)),
+        }
+    }
+}
+
+#[tauri::command]
+pub async fn start_proxy_server(
+    app_handle: AppHandle,
+    proxy_state: TauriState<'_, ProxyState>,
+    host: String,
+    port: u16,
+) -> Result<String, String> {
+    {
+        let handle_guard = proxy_state
+            .server_handle
+            .lock()
+            .map_err(|e| e.to_string())?;
+
+        if handle_guard.is_some() {
+            return Err("Proxy server is already running".to_string());
+        }
+    }
+
+    let addr_str = format!("{}:{}", host, port);
+    let addr = addr_str.clone(); // Clone for logging/return inside closure
+
+    let state = AppState {
+        app_handle: app_handle.clone(),
+        client: Client::new(),
+    };
+
+    let app = Router::new()
+        .route("/{model_id}/v1/{*path}", any(proxy_handler))
+        .layer(CorsLayer::permissive())
+        .with_state(state);
+
+    info!("Attempting to start proxy on {}", addr_str);
+
+    let listener = TcpListener::bind(&addr_str)
+        .await
+        .map_err(|e| format!("Failed to bind to {}: {}", addr_str, e))?;
+
+    let (abort_handle, abort_registration) = AbortHandle::new_pair();
+
+    {
+        let mut handle_guard = proxy_state
+            .server_handle
+            .lock()
+            .map_err(|e| e.to_string())?;
+
+        // Double check to handle race conditions
+        if handle_guard.is_some() {
+            return Err("Proxy server started by another request".to_string());
+        }
+
+        // Store the abort handle
+        *handle_guard = Some(abort_handle);
+    }
+
+    // Spawn the server task
     tauri::async_runtime::spawn(async move {
-        let state = AppState {
-            app_handle,
-            client: Client::new(),
-        };
+        // Use future::abortable to allow cancellation
+        let serve_future = axum::serve(listener, app).into_future();
 
-        let app = Router::new()
-            .route("/{model_id}/v1/{*path}", any(proxy_handler))
-            .layer(CorsLayer::permissive())
-            .with_state(state);
+        // Wrap with Abortable
+        let abortable_future = futures::future::Abortable::new(serve_future, abort_registration);
 
-        let addr = format!("0.0.0.0:{}", port);
-
-        info!("Starting LLM-Gate proxy server on {}", addr);
-
-        let listener = match tokio::net::TcpListener::bind(&addr).await {
-            Ok(l) => l,
-            Err(e) => {
-                error!("Failed to bind proxy port {}: {}", port, e);
-                return;
+        match abortable_future.await {
+            Ok(result) => {
+                if let Err(e) = result {
+                    error!("Proxy server error: {}", e);
+                } else {
+                    info!("Proxy server stopped gracefully.");
+                }
             }
-        };
-
-        if let Err(e) = axum::serve(listener, app).await {
-            error!("Proxy server error: {}", e);
+            Err(_) => {
+                info!("Proxy server aborted.");
+            }
         }
     });
+
+    Ok(format!("Proxy server started on {}", addr))
+}
+
+#[tauri::command]
+pub async fn stop_proxy_server(proxy_state: TauriState<'_, ProxyState>) -> Result<String, String> {
+    let mut handle_guard = proxy_state
+        .server_handle
+        .lock()
+        .map_err(|e| e.to_string())?;
+
+    if let Some(handle) = handle_guard.take() {
+        handle.abort();
+        info!("Proxy server stop signal sent.");
+        Ok("Proxy server stopped".to_string())
+    } else {
+        Err("Proxy server is not running".to_string())
+    }
 }
 
 async fn proxy_handler(
