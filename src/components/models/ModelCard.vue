@@ -50,7 +50,7 @@ const validateId = (val: string) => {
 <template>
   <Card :class="{ 'animate-flash-border': isNew }">
     <CardHeader class="-m-3">
-      <CardTitle class="flex items-center">
+      <CardTitle class="flex items-center leading-6">
         <Sparkle class="size-6 mr-2" />
         <div class="capitalize max-w-32 truncate">
           {{ getDomainName(model.baseUrl || "") || model.id }}
