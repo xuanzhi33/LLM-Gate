@@ -4,9 +4,9 @@ import { storeToRefs } from 'pinia'
 import { useSettingsStore } from '@/stores/settings'
 import SettingsItem from '@/components/settings/SettingsItem.vue'
 import { computed } from 'vue'
-import { AppWindow, Languages, LucideLogs, Plug, Settings, Settings2, SunMoon } from 'lucide-vue-next'
+import { AppWindow, Globe, Languages, LucideLogs, Settings, Settings2, SunMoon, Zap } from 'lucide-vue-next'
 const settingsStore = useSettingsStore()
-const { colorMode, language, serverPort } = storeToRefs(settingsStore)
+const { colorMode, language } = storeToRefs(settingsStore)
 
 const { t, availableLocales } = useI18n()
 
@@ -50,8 +50,10 @@ const sectionTitleClass = 'font-semibold text-muted-foreground border-b pt-3 pb-
           <Settings2 class="mr-2" />
           {{ t('settings.app.title') }}
         </h2>
-        <SettingsItem class="w-28" v-model="serverPort" :label="t('settings.app.serverPort')" type="input" :icon="Plug"
-          :description="t('settings.app.serverPortDesc')" />
+        <SettingsItem :icon="Zap" v-model="settingsStore.autoStart" :label="t('settings.app.autoStart')"
+          :description="t('settings.app.autoStartDesc')" type="switch" />
+        <SettingsItem :icon="Globe" v-model="settingsStore.exposeServer" :label="t('settings.app.exposeServer')"
+          :description="t('settings.app.exposeServerDesc')" type="switch" />
         <SettingsItem :icon="LucideLogs" v-model="settingsStore.enableLogging" :label="t('settings.app.enableLogging')"
           :description="t('settings.app.enableLoggingDesc')" type="switch" />
       </section>
