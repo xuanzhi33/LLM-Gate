@@ -10,7 +10,30 @@
     "edit": "Edit",
     "empty": "Empty",
     "modelCount": "No models | 1 model | {count} models",
-    "resultCount": "No results | 1 result | {count} results"
+    "resultCount": "No results | 1 result | {count} results",
+    "error": "An error occurred",
+    "ok": "OK"
+  },
+  "errors": {
+    "proxyStart": "Failed to start the gateway server",
+    "proxyStop": "Failed to stop the gateway server"
+  },
+  "info": {
+    "proxyStarted": "Gateway server started on port {port}",
+    "proxyStopped": "Gateway server stopped"
+  },
+  "home": {
+    "title": "LLM Gateway Server",
+    "status": {
+      "active": "Running",
+      "stopped": "Stopped",
+      "listening": "Listening on {host}:{port}",
+      "requestCount": "Request Count"
+    },
+    "actions": {
+      "start": "Start Service",
+      "stop": "Stop Service"
+    }
   },
   "settings": {
     "title": "Settings",
@@ -29,11 +52,15 @@
       }
     },
     "app": {
-      "title": "Miscellaneous",
+      "title": "Features",
       "enableLogging": "Enable debug logging",
-      "serverPort": "Server Port",
-      "serverPortDesc": "Restart required.",
-      "enableLoggingDesc": "Write software running information to the log file. It is not recommended to turn it on."
+      "serverPort": "Gateway server port",
+      "serverPortDesc": "LLM local gateway server port. Please ensure that this port is not occupied by other programs.",
+      "enableLoggingDesc": "Write software running information to the log file. It is not recommended to turn it on.",
+      "autoStart": "Auto-start Gateway",
+      "autoStartDesc": "Automatically start the LLM gateway server when the application starts.",
+      "exposeServer": "Allow LAN access",
+      "exposeServerDesc": "Allow access from other devices on the LAN. \nEnable only if you trust these devices."
     }
   },
   "models": {

@@ -10,7 +10,30 @@
     "edit": "编辑",
     "empty": "未填写",
     "modelCount": "暂无模型 | 共 1 个模型 | 共 {count} 个模型",
-    "resultCount": "无结果 | 共 1 个结果 | 共 {count} 个结果"
+    "resultCount": "无结果 | 共 1 个结果 | 共 {count} 个结果",
+    "error": "发生了错误",
+    "ok": "确定"
+  },
+  "errors": {
+    "proxyStart": "未能成功启动网关服务",
+    "proxyStop": "未能成功停止网关服务"
+  },
+  "info": {
+    "proxyStarted": "网关服务已在端口 {port} 上启动",
+    "proxyStopped": "网关服务已停止"
+  },
+  "home": {
+    "title": "LLM 网关服务",
+    "status": {
+      "active": "运行中",
+      "stopped": "已停止",
+      "listening": "监听地址 {host}:{port}",
+      "requestCount": "请求数"
+    },
+    "actions": {
+      "start": "启动服务",
+      "stop": "停止服务"
+    }
   },
   "settings": {
     "title": "设置",
@@ -29,11 +52,15 @@
       }
     },
     "app": {
-      "title": "杂项设置",
+      "title": "功能设置",
       "enableLogging": "启用调试日志",
-      "serverPort": "服务端口",
-      "serverPortDesc": "重启服务后生效",
-      "enableLoggingDesc": "将软件运行信息写入日志文件，不建议开启。"
+      "serverPort": "网关服务端口",
+      "serverPortDesc": "LLM 本地网关服务端口，请确保该端口未被其他程序占用。",
+      "enableLoggingDesc": "将软件运行信息写入日志文件，不建议开启。",
+      "autoStart": "自动启动网关服务",
+      "autoStartDesc": "在应用启动时自动开启 LLM 网关服务。",
+      "exposeServer": "允许局域网访问",
+      "exposeServerDesc": "允许来自局域网中的其他设备的访问。仅当您信任这些设备时启用。"
     }
   },
   "models": {
