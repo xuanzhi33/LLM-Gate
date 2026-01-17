@@ -1,12 +1,12 @@
-import { usePreferredDark, usePreferredLanguages } from '@vueuse/core'
+import { usePreferredDark, usePreferredLanguages, useStorage } from '@vueuse/core'
 import { defineStore } from 'pinia'
 import { computed, watch } from 'vue'
-import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 export type ColorMode = 'light' | 'dark' | 'system'
 
-export const LOCAL_STORAGE_KEY_PREFIX = 'xuanzhi33-'
+export const PREFIX = 'xuanzhi33-'
+export const DEFAULT_PORT = 11456
 
 export const useSettingsStore = defineStore('settings', () => {
   const browserDark = usePreferredDark()
@@ -17,29 +17,12 @@ export const useSettingsStore = defineStore('settings', () => {
     browserLanguages.value.some((lang) => lang.startsWith('zh') || lang.startsWith('cn')),
   )
 
-  const language = ref(
-    localStorage.getItem(LOCAL_STORAGE_KEY_PREFIX + 'language') || (preferZh.value ? 'zh' : 'en'),
-  )
-  const colorMode = ref(
-    (localStorage.getItem(LOCAL_STORAGE_KEY_PREFIX + 'color-mode') as ColorMode) || 'system',
-  )
-  const enableLogging = ref(
-    localStorage.getItem(LOCAL_STORAGE_KEY_PREFIX + 'enable-logging') === 'true' || false,
-  )
-  const serverPort = ref(localStorage.getItem(LOCAL_STORAGE_KEY_PREFIX + 'server-port') || '11434')
-
-  const persist = (key: string, value: string) => {
-    localStorage.setItem(LOCAL_STORAGE_KEY_PREFIX + key, value)
-  }
-
-  const saveSettings = () => {
-    persist('color-mode', colorMode.value)
-    persist('language', language.value)
-    persist('enable-logging', enableLogging.value ? 'true' : 'false')
-    persist('server-port', serverPort.value)
-  }
-
-  watch([colorMode, language, enableLogging, serverPort], saveSettings)
+  const language = useStorage(PREFIX + 'language', preferZh.value ? 'zh' : 'en')
+  const colorMode = useStorage<ColorMode>(PREFIX + 'color-mode', 'system')
+  const enableLogging = useStorage(PREFIX + 'enable-logging', false)
+  const serverPort = useStorage(PREFIX + 'server-port', DEFAULT_PORT)
+  const autoStart = useStorage(PREFIX + 'auto-start', true)
+  const exposeServer = useStorage(PREFIX + 'expose-server', false)
 
   const isDarkMode = computed(() => {
     if (colorMode.value === 'dark') return true
@@ -67,5 +50,7 @@ export const useSettingsStore = defineStore('settings', () => {
     applyLanguage,
     enableLogging,
     serverPort,
+    autoStart,
+    exposeServer,
   }
 })
