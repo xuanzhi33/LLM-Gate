@@ -2,6 +2,7 @@ use log::info;
 use tauri::Manager;
 
 pub mod config;
+pub mod events;
 pub mod proxy;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]

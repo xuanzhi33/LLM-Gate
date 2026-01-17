@@ -9,15 +9,18 @@ use axum::{
 use bytes::Bytes;
 use futures::future::AbortHandle;
 use http_body_util::BodyExt;
-use log::{debug, error, warn};
+use log::{debug, error};
 use reqwest::Client;
 use std::future::IntoFuture;
 use std::sync::{Arc, Mutex};
-use tauri::{AppHandle, Emitter, State as TauriState};
+use tauri::{AppHandle, State as TauriState};
 use tokio::net::TcpListener;
 use tower_http::cors::CorsLayer;
 
-use crate::config::load_model_config;
+use crate::{
+    config::load_model_config,
+    events::{emit_request, emit_status_change},
+};
 
 #[derive(Clone)]
 struct AppState {
@@ -113,16 +116,7 @@ pub async fn start_proxy_server(
         }
     });
 
-    app_handle
-        .emit(
-            "proxy-status-change",
-            serde_json::json!({
-                "status": "running",
-                "host": host,
-                "port": port,
-            }),
-        )
-        .map_err(|e| e.to_string())?;
+    emit_status_change(&app_handle, "running", &host, port)?;
 
     Ok(format!("Proxy server started on {}", addr))
 }
@@ -141,16 +135,7 @@ pub async fn stop_proxy_server(
         handle.abort();
         debug!("Proxy server stop signal sent.");
 
-        app_handle
-            .emit(
-                "proxy-status-change",
-                serde_json::json!({
-                    "status": "stopped",
-                    "host": "",
-                    "port": 0,
-                }),
-            )
-            .map_err(|e| e.to_string())?;
+        emit_status_change(&app_handle, "stopped", "", 0)?;
 
         Ok("Proxy server stopped".to_string())
     } else {
@@ -166,15 +151,8 @@ async fn proxy_handler(
     body: Body,
 ) -> Result<Response, StatusCode> {
     // Emit request event
-    if let Err(e) = state.app_handle.emit(
-        "proxy-request",
-        serde_json::json!({
-            "method": method.to_string(),
-            "model_id": model_id,
-            "path": path
-        }),
-    ) {
-        warn!("Failed to emit proxy request event: {}", e);
+    if let Err(e) = emit_request(&state.app_handle, method.as_str(), &model_id, &path) {
+        debug!("Failed to emit proxy request event: {}", e);
     }
 
     debug!("Incoming request: {} /{}/v1/{}", method, model_id, path);
@@ -188,7 +166,7 @@ async fn proxy_handler(
     let config = match configs.into_iter().find(|c| c.id == model_id) {
         Some(c) => c,
         None => {
-            warn!("Model ID not found in config: {}", model_id);
+            debug!("Model ID not found in config: {}", model_id);
             return Err(StatusCode::NOT_FOUND);
         }
     };
@@ -196,7 +174,7 @@ async fn proxy_handler(
     let base_url = match config.base_url {
         Some(url) => url.trim_end_matches('/').to_string(),
         None => {
-            warn!("Base URL missing for model: {}", model_id);
+            debug!("Base URL missing for model: {}", model_id);
             return Err(StatusCode::BAD_REQUEST);
         }
     };
@@ -224,7 +202,7 @@ async fn proxy_handler(
     let body_bytes = match body.collect().await {
         Ok(collected) => collected.to_bytes(),
         Err(e) => {
-            error!("Failed to read request body: {}", e);
+            debug!("Failed to read request body: {}", e);
             return Err(StatusCode::BAD_REQUEST);
         }
     };
@@ -246,7 +224,7 @@ async fn proxy_handler(
                         }
                     }
                 } else {
-                    warn!("Failed to parse body as JSON for model override");
+                    debug!("Failed to parse body as JSON for model override");
                 }
             }
         }
@@ -262,7 +240,7 @@ async fn proxy_handler(
     debug!("Forwarding {} request to upstream: {}", method, target_url);
 
     let res = req.send().await.map_err(|e| {
-        error!("Upstream request failed: {}", e);
+        debug!("Upstream request failed: {}", e);
         StatusCode::BAD_GATEWAY
     })?;
 
