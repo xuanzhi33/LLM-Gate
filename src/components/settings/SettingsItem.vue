@@ -25,7 +25,7 @@ export interface SettingsItemProps {
   icon?: Component
 }
 
-const props = withDefaults(defineProps<SettingsItemProps>(), {
+withDefaults(defineProps<SettingsItemProps>(), {
   type: 'input',
 })
 
@@ -48,7 +48,7 @@ const modelValue = defineModel<string | boolean>()
           </SelectValue>
         </SelectTrigger>
         <SelectContent>
-          <SelectItem v-for="opt in options" :value="opt.value">
+          <SelectItem v-for="opt in options" :value="opt.value" :key="opt.value">
             {{ opt.label }}
           </SelectItem>
         </SelectContent>

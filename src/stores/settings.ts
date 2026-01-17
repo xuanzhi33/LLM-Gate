@@ -2,6 +2,7 @@ import { usePreferredDark, usePreferredLanguages, useStorage } from '@vueuse/cor
 import { defineStore } from 'pinia'
 import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useProxyStore } from './proxy'
 
 export type ColorMode = 'light' | 'dark' | 'system'
 
@@ -42,6 +43,15 @@ export const useSettingsStore = defineStore('settings', () => {
   }
   watch(language, applyLanguage)
 
+  const host = computed(() => (exposeServer.value ? '0.0.0.0' : '127.0.0.1'))
+
+  watch([serverPort, exposeServer], () => {
+    const proxyStore = useProxyStore()
+    if (proxyStore.status === 'running') {
+      proxyStore.restart()
+    }
+  })
+
   return {
     colorMode,
     isDarkMode,
@@ -52,5 +62,6 @@ export const useSettingsStore = defineStore('settings', () => {
     serverPort,
     autoStart,
     exposeServer,
+    host,
   }
 })
