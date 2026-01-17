@@ -9,6 +9,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
 import { useErrorStore } from '@/stores/error'
+import { AlertTriangleIcon, Check } from 'lucide-vue-next'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 
@@ -21,13 +22,19 @@ const { t } = useI18n()
   <AlertDialog :open="isOpen" @update:open="(val) => !val && errorStore.close()">
     <AlertDialogContent>
       <AlertDialogHeader>
-        <AlertDialogTitle class="text-destructive">{{ title || t('common.error') }}</AlertDialogTitle>
+        <AlertDialogTitle>
+          <AlertTriangleIcon class="text-destructive size-8" />
+          {{ title || t('common.error') }}
+        </AlertDialogTitle>
         <AlertDialogDescription class="whitespace-pre-wrap">
           {{ message }}
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
-        <AlertDialogAction @click="errorStore.close()">{{ t('common.ok') }}</AlertDialogAction>
+        <AlertDialogAction @click="errorStore.close()">
+          <Check />
+          {{ t('common.ok') }}
+        </AlertDialogAction>
       </AlertDialogFooter>
     </AlertDialogContent>
   </AlertDialog>
