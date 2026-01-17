@@ -13,16 +13,23 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar'
-
-import appIcon from '../../app-icon.png'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 
 import { Home, Package, PanelLeftClose, PanelLeftOpen, Settings } from 'lucide-vue-next';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
+import StatusDot from '@/components/dashboard/StatusDot.vue';
+import { useProxyStore } from '@/stores/proxy';
 
 const { t } = useI18n()
 const route = useRoute()
+const proxyStore = useProxyStore()
 
 const { open, setOpenMobile, isMobile, toggleSidebar } = useSidebar();
 const items = computed(() => [
@@ -42,6 +49,14 @@ const items = computed(() => [
     icon: Settings,
   },
 ])
+
+const toggleProxy = async () => {
+  if (proxyStore.status === 'running') {
+    await proxyStore.stop()
+  } else {
+    await proxyStore.start()
+  }
+}
 </script>
 
 <template>
@@ -49,12 +64,23 @@ const items = computed(() => [
     <SidebarHeader>
       <SidebarMenu>
         <SidebarMenuItem>
-          <SidebarMenuButton size="lg" class="text-xl font-bold">
-            <img :src="appIcon" class="size-8 mr-1" />
-            <h1 class="truncate">
-              {{ t('common.title') }}
-            </h1>
-          </SidebarMenuButton>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger as-child>
+                <SidebarMenuButton size="lg" class="text-xl font-bold" @click="toggleProxy">
+                  <div class="ml-2 mr-2">
+                    <StatusDot class="size-4" />
+                  </div>
+                  <h1 class="truncate">
+                    {{ t('common.title') }}
+                  </h1>
+                </SidebarMenuButton>
+              </TooltipTrigger>
+              <TooltipContent side="right">
+                <p>{{ proxyStore.status === 'running' ? t('home.actions.stop') : t('home.actions.start') }}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </SidebarMenuItem>
       </SidebarMenu>
     </SidebarHeader>

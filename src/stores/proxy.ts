@@ -9,13 +9,13 @@ import { useErrorStore } from './error'
 import { useI18n } from 'vue-i18n'
 
 export const useProxyStore = defineStore('proxy', () => {
+  const { t } = useI18n()
   const status = ref<'running' | 'stopped'>('stopped')
   const host = ref('')
   const port = ref(DEFAULT_PORT)
   const requestCount = ref(0)
 
   const initListeners = async () => {
-    const { t } = useI18n()
     await listen<{ status: 'running' | 'stopped'; host: string; port: number }>(
       'proxy-status-change',
       (event) => {
@@ -45,7 +45,6 @@ export const useProxyStore = defineStore('proxy', () => {
   const start = async () => {
     const settings = useSettingsStore()
     const errorStore = useErrorStore()
-    const { t } = useI18n()
     const currentHost = settings.host
     const currentPort = settings.serverPort
 
@@ -63,7 +62,6 @@ export const useProxyStore = defineStore('proxy', () => {
   }
 
   const stop = async () => {
-    const { t } = useI18n()
     const errorStore = useErrorStore()
 
     try {
