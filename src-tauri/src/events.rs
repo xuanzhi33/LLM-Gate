@@ -21,7 +21,12 @@ pub struct ProxyErrorPayload {
     pub message: String,
 }
 
-pub fn emit_status_change(app: &AppHandle, status: &str, host: &str, port: u16) -> Result<(), String> {
+pub fn emit_status_change(
+    app: &AppHandle,
+    status: &str,
+    host: &str,
+    port: u16,
+) -> Result<(), String> {
     app.emit(
         "proxy-status-change",
         ProxyStatusPayload {
@@ -33,7 +38,12 @@ pub fn emit_status_change(app: &AppHandle, status: &str, host: &str, port: u16) 
     .map_err(|e| e.to_string())
 }
 
-pub fn emit_request(app: &AppHandle, method: &str, model_id: &str, path: &str) -> Result<(), String> {
+pub fn emit_request(
+    app: &AppHandle,
+    method: &str,
+    model_id: &str,
+    path: &str,
+) -> Result<(), String> {
     app.emit(
         "proxy-request",
         ProxyRequestPayload {
