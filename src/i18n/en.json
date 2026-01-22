@@ -54,7 +54,7 @@
     "app": {
       "title": "Features",
       "enableLogging": "Enable debug logging",
-      "serverPort": "Gateway server port",
+      "serverPort": "Port",
       "serverPortDesc": "LLM local gateway server port. Please ensure that this port is not occupied by other programs.",
       "enableLoggingDesc": "Write software running information to the log file. It is not recommended to turn it on.",
       "autoStart": "Auto-start Gateway",

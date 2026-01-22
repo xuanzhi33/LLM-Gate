@@ -54,7 +54,7 @@
     "app": {
       "title": "功能设置",
       "enableLogging": "启用调试日志",
-      "serverPort": "网关服务端口",
+      "serverPort": "端口",
       "serverPortDesc": "LLM 本地网关服务端口，请确保该端口未被其他程序占用。",
       "enableLoggingDesc": "将软件运行信息写入日志文件，不建议开启。",
       "autoStart": "自动启动网关服务",

@@ -1,28 +1,27 @@
 <script lang="ts" setup>
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { useProxyStore } from '@/stores/proxy';
-import { Activity, Plug, Power, Server } from 'lucide-vue-next';
-import { useI18n } from 'vue-i18n';
-import StatusDot from './StatusDot.vue';
-import EditableField from '../common/EditableField.vue';
-import { useSettingsStore } from '@/stores/settings';
-import { storeToRefs } from 'pinia';
-import CardAction from '../ui/card/CardAction.vue';
-import Badge from '../ui/badge/Badge.vue';
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { useProxyStore } from '@/stores/proxy'
+import { Activity, Plug, Power, Server } from 'lucide-vue-next'
+import { useI18n } from 'vue-i18n'
+import StatusDot from './StatusDot.vue'
+import EditableField from '../common/EditableField.vue'
+import { useSettingsStore } from '@/stores/settings'
+import { storeToRefs } from 'pinia'
+import CardAction from '../ui/card/CardAction.vue'
+import Badge from '../ui/badge/Badge.vue'
 
-const { t } = useI18n();
-const proxyStore = useProxyStore();
-const settingsStore = useSettingsStore();
-const { serverPort } = storeToRefs(settingsStore);
+const { t } = useI18n()
+const proxyStore = useProxyStore()
+const settingsStore = useSettingsStore()
+const { serverPort } = storeToRefs(settingsStore)
 
 async function toggleProxy() {
   if (proxyStore.status === 'running') {
-    await proxyStore.stop();
+    await proxyStore.stop()
   } else {
-    await proxyStore.start();
+    await proxyStore.start()
   }
-
 }
 </script>
 
@@ -48,11 +47,10 @@ async function toggleProxy() {
     </CardHeader>
     <CardContent>
       <div class="flex items-center justify-between">
-        <div class="w-44">
-          <EditableField :modelValue="serverPort.toString()" @update:modelValue="val => serverPort = parseInt(val)"
+        <div class="w-32">
+          <EditableField :modelValue="serverPort.toString()" @update:modelValue="(val) => (serverPort = parseInt(val))"
             :label="t('settings.app.serverPort')" :type="'text'" :label-icon="Plug"
             :description="t('settings.app.serverPortDesc')" />
-
         </div>
         <div class="flex items-center">
           <div class="flex items-center text-muted-foreground text-sm">
