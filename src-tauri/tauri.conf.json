@@ -29,7 +29,10 @@
   "bundle": {
     "active": true,
     "createUpdaterArtifacts": true,
-    "targets": "all",
+    "category": "Utility",
+    "copyright": "Copyright © 2026 xuanzhi33. Licensed under AGPL-3.0.",
+    "longDescription": "A lightweight local AI gateway that securely proxies LLM API requests with automatic key injection and CORS support.",
+    "targets": ["nsis", "dmg"],
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
