@@ -98,5 +98,10 @@
       "idRequired": "Model ID is required",
       "idExists": "Model ID already exists"
     }
+  },
+  "menu": {
+    "quit": "Quit",
+    "showWindow": "Show main window",
+    "enableProxy": "Enable LLM gateway server"
   }
 }

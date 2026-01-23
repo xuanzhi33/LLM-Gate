@@ -98,5 +98,10 @@
       "idRequired": "模型 ID 不能为空",
       "idExists": "模型 ID 已存在"
     }
+  },
+  "menu": {
+    "quit": "退出",
+    "showWindow": "显示主界面",
+    "enableProxy": "启用 LLM 网关服务"
   }
 }

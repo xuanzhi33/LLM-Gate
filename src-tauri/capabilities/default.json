@@ -3,5 +3,11 @@
   "identifier": "default",
   "description": "enables the default permissions",
   "windows": ["main"],
-  "permissions": ["core:default", "fs:default", "fs:allow-applocaldata-write", "log:default"]
+  "permissions": [
+    "core:default",
+    "fs:default",
+    "fs:allow-applocaldata-write",
+    "log:default",
+    "core:app:allow-default-window-icon"
+  ]
 }

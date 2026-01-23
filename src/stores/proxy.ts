@@ -54,6 +54,11 @@ export const useProxyStore = defineStore('proxy', () => {
         port: currentPort,
       })
     } catch (error) {
+      if (typeof error === 'string' && error.includes('already running')) {
+        log('Proxy server is already running, restarting...')
+        await restart()
+        return
+      }
       errorStore.showError(
         t('errors.proxyStart'),
         error instanceof Error ? error.message : String(error),

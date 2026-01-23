@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { useProxyStore } from '@/stores/proxy'
-import { Activity, Plug, Power, Server } from 'lucide-vue-next'
+import { Activity, Play, Plug, Server, Square } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
 import StatusDot from './StatusDot.vue'
 import EditableField from '../common/EditableField.vue'
@@ -40,7 +40,8 @@ async function toggleProxy() {
       </CardDescription>
       <CardAction>
         <Button :variant="proxyStore.status === 'running' ? 'destructive' : 'default'" @click="toggleProxy">
-          <Power />
+          <Play v-if="proxyStore.status !== 'running'" />
+          <Square v-else />
           {{ proxyStore.status === 'running' ? t('home.actions.stop') : t('home.actions.start') }}
         </Button>
       </CardAction>

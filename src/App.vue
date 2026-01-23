@@ -1,33 +1,51 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
-import { useSettingsStore } from './stores/settings';
-import SidebarLayout from './layout/SidebarLayout.vue';
-import { SidebarProvider } from './components/ui/sidebar';
-import { useModelConfigStore } from './stores/models';
-import { useProxyStore } from './stores/proxy';
-import { useErrorStore } from './stores/error';
-import GlobalErrorDialog from './components/common/GlobalErrorDialog.vue';
-import { Toaster } from 'vue-sonner';
+import { useSettingsStore } from './stores/settings'
+import SidebarLayout from './layout/SidebarLayout.vue'
+import { SidebarProvider } from './components/ui/sidebar'
+import { useModelConfigStore } from './stores/models'
+import { useProxyStore } from './stores/proxy'
+import { useErrorStore } from './stores/error'
+import GlobalErrorDialog from './components/common/GlobalErrorDialog.vue'
+import { Toaster } from 'vue-sonner'
 import 'vue-sonner/style.css'
+import { useEventListener } from '@vueuse/core'
+import { initTray } from './utils/tray'
 
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 onMounted(() => {
-  const settingsStore = useSettingsStore();
-  const modelsStore = useModelConfigStore();
-  const proxyStore = useProxyStore();
-  const errorStore = useErrorStore();
-  
-  settingsStore.applyColorMode();
-  settingsStore.applyLanguage();
+  const settingsStore = useSettingsStore()
+  const modelsStore = useModelConfigStore()
+  const proxyStore = useProxyStore()
+  const errorStore = useErrorStore()
 
-  modelsStore.loadFromDisk();
-  proxyStore.initListeners();
-  errorStore.initListeners();
+  settingsStore.applyColorMode()
+  settingsStore.applyLanguage()
+
+  modelsStore.loadFromDisk()
+  proxyStore.initListeners()
+  errorStore.initListeners()
+
+  initTray(t)
 
   if (settingsStore.autoStart) {
-    proxyStore.start();
+    proxyStore.start()
   }
-});
+})
+
+useEventListener(document, 'contextmenu', (event) => {
+  const target = event.target
+  if (!target) return
+  if (!(target instanceof HTMLElement)) return
+  const tagName = target.tagName
+
+  if (tagName !== 'INPUT' && tagName !== 'TEXTAREA') {
+    event.preventDefault()
+  }
+})
 </script>
 
 <template>
