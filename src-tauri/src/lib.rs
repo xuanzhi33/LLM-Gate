@@ -8,11 +8,14 @@ pub mod proxy;
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_updater::Builder::new().build())
+        .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
-            let _ = app
-                .get_webview_window("main")
-                .expect("no main window")
-                .set_focus();
+            let window = app.get_webview_window("main").expect("no main window");
+
+            window.show().unwrap();
+            window.unminimize().unwrap();
+            window.set_focus().unwrap();
         }))
         .plugin(tauri_plugin_fs::init())
         .manage(proxy::ProxyState::new())
@@ -20,6 +23,12 @@ pub fn run() {
             proxy::start_proxy_server,
             proxy::stop_proxy_server
         ])
+        .on_window_event(|window, event| {
+            if let tauri::WindowEvent::CloseRequested { api, .. } = event {
+                let _ = window.hide();
+                api.prevent_close();
+            }
+        })
         .setup(|app| {
             let _ = app.get_webview_window("main").unwrap();
             if cfg!(debug_assertions) {

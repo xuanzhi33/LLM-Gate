@@ -18,7 +18,8 @@
         "minHeight": 400,
         "minWidth": 400,
         "resizable": true,
-        "fullscreen": false
+        "fullscreen": false,
+        "transparent": true
       }
     ],
     "security": {
@@ -27,6 +28,7 @@
   },
   "bundle": {
     "active": true,
+    "createUpdaterArtifacts": true,
     "targets": "all",
     "icon": [
       "icons/32x32.png",
@@ -40,6 +42,12 @@
         "displayLanguageSelector": true,
         "languages": ["English", "SimpChinese"]
       }
+    }
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDVFN0U1NDAwMzBEM0E2OTgKUldTWXB0TXdBRlIrWHNtSDRpRUZYYWIwVThqYVU2Q2d1NjZhMlU0Q2xhMEFSZyt4UTJSK29KNkIK",
+      "endpoints": ["https://github.com/xuanzhi33/LLM-Gate/releases/download/latest.json"]
     }
   }
 }

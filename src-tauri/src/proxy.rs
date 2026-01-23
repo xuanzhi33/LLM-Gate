@@ -210,7 +210,9 @@ async fn proxy_handler(
     let mut final_body = body_bytes;
 
     // Check if we need to modify body to override model name
-    let is_chat_or_messages = path.ends_with("chat/completions") || path.ends_with("messages") || path.ends_with("responses");
+    let is_chat_or_messages = path.ends_with("chat/completions")
+        || path.ends_with("messages")
+        || path.ends_with("responses");
     if is_chat_or_messages && method == Method::POST {
         if let Some(model_name) = config.model {
             if !model_name.is_empty() {

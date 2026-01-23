@@ -8,6 +8,11 @@
     "fs:default",
     "fs:allow-applocaldata-write",
     "log:default",
-    "core:app:allow-default-window-icon"
+    "core:app:allow-default-window-icon",
+    "core:window:allow-show",
+    "core:window:allow-close",
+    "core:window:allow-set-focus",
+    "core:window:allow-unminimize",
+    "process:default"
   ]
 }
