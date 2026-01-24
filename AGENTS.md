@@ -5,7 +5,7 @@
 LLM Gate is a Tauri-based desktop application for proxying LLM API requests with automatic key injection and CORS support. It's a hybrid architecture with Vue 3 frontend and Rust backend.
 
 **Stack**: 
-- **Frontend**: Tauri v2 + Vue 3 + TypeScript + Vite + Pinia + shadcn-vue (reka-ui) + Tailwind CSS 4
+- **Frontend**: Tauri v2 + Vue 3 + TypeScript + Vite + Pinia + shadcn-vue (reka-ui) + Tailwind CSS 4 + vue-sonner + @tanstack/vue-table
 - **Backend**: Rust + Axum (HTTP Server) + Reqwest (HTTP Client) + Tokio (Async Runtime)
 
 ## Architecture
@@ -115,6 +115,7 @@ Uses **shadcn-vue** (reka-ui primitives) with New York style:
 - **App Data**: `src/utils/app-data.ts` - Abstraction for Tauri FS (JSON/Text).
 - **Proxy Client**: `src/utils/proxy.ts` - Wrapper for proxy-related Tauri commands.
 - **Logging**: `src/utils/log.ts` - Structured logging using `tauri-plugin-log`.
+- **Tray & Window**: `src/utils/tray.ts` and `src/utils/window.ts` - System tray and window management.
 - **URL Utils**: `src/utils/url.ts` - Domain name extraction and normalization.
 - **EditableField**: `src/components/common/EditableField.vue` - Reusable field for viewing/editing values with validation and copy-to-clipboard support.
 - **ID Generation**: Use `nanoid`.
@@ -159,6 +160,8 @@ Main window config in `src-tauri/tauri.conf.json`:
 
 - `src/stores/models.ts` - Model configuration store with auto-persistence.
 - `src/stores/settings.ts` - App settings (theme, language, logging).
+- `src/stores/proxy.ts` - Proxy server state and control (start/stop/restart).
+- `src/stores/error.ts` - Global error handling and dialog state.
 - `src/utils/app-data.ts` - Tauri FS abstraction layer.
 
 ### Backend (Rust)
