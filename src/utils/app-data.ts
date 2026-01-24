@@ -1,7 +1,17 @@
-import { BaseDirectory, exists, readTextFile, writeTextFile } from '@tauri-apps/plugin-fs'
+import { BaseDirectory, exists, mkdir, readTextFile, writeTextFile } from '@tauri-apps/plugin-fs'
 export const baseDir = BaseDirectory.AppLocalData
 
+export async function ensureAppDataDir() {
+  const hasDir = await exists('', {
+    baseDir,
+  })
+
+  if (!hasDir) {
+    await mkdir('', { recursive: true, baseDir })
+  }
+}
 export async function saveText(text: string, filename: string) {
+  await ensureAppDataDir()
   await writeTextFile(filename, text, {
     baseDir,
   })
