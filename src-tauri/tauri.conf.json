@@ -49,7 +49,7 @@
   },
   "plugins": {
     "updater": {
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDVFN0U1NDAwMzBEM0E2OTgKUldTWXB0TXdBRlIrWHNtSDRpRUZYYWIwVThqYVU2Q2d1NjZhMlU0Q2xhMEFSZyt4UTJSK29KNkIK",
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDk1NDM1NUZGMzJDM0UwODcKUldTSDRNTXkvMVZEbFJHcmJOREhNKysrVk41dWk4ckhVRlB2VGZOaEorVWREWko2ZmVsbVIzS20K",
       "endpoints": ["https://github.com/xuanzhi33/LLM-Gate/releases/download/latest.json"]
     }
   }
