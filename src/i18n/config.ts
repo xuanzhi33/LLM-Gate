@@ -8,4 +8,26 @@ export const i18n = createI18n({
     en,
     zh,
   },
+  datetimeFormats: {
+    en: {
+      long: {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+      },
+    },
+    zh: {
+      long: {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+      },
+    },
+  },
 })

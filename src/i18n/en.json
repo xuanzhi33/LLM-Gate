@@ -12,7 +12,8 @@
     "modelCount": "No models | 1 model | {count} models",
     "resultCount": "No results | 1 result | {count} results",
     "error": "An error occurred",
-    "ok": "OK"
+    "ok": "OK",
+    "cancel": "Cancel"
   },
   "errors": {
     "proxyStart": "Failed to start the gateway server",
@@ -61,6 +62,24 @@
       "autoStartDesc": "Automatically start the LLM gateway server when the application starts.",
       "exposeServer": "Allow LAN access",
       "exposeServerDesc": "Allow access from other devices on the LAN. \nEnable only if you trust these devices."
+    },
+    "update": {
+      "available": "New Update Available",
+      "downloading": "Downloading Update...",
+      "installing": "Installing Update...",
+      "updating": "Updating...",
+      "update_now": "Update Now",
+      "restart": "Restart Now",
+      "ready": "Update installed. Restart to apply changes.",
+      "checkUpdate": "Check for Updates",
+      "noUpdate": "You are on the latest version",
+      "checkError": "Failed to check for updates"
+    },
+    "about": {
+      "title": "About",
+      "version": "Version",
+      "repo": "Code Repo",
+      "reportIssue": "Report Bug"
     }
   },
   "models": {

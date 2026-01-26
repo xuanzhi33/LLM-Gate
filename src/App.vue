@@ -7,7 +7,9 @@ import { SidebarProvider } from './components/ui/sidebar'
 import { useModelConfigStore } from './stores/models'
 import { useProxyStore } from './stores/proxy'
 import { useErrorStore } from './stores/error'
+import { useUpdateStore } from './stores/update'
 import GlobalErrorDialog from './components/common/GlobalErrorDialog.vue'
+import UpdateDialog from './components/common/UpdateDialog.vue'
 import { Toaster } from 'vue-sonner'
 import 'vue-sonner/style.css'
 import { useEventListener } from '@vueuse/core'
@@ -21,6 +23,7 @@ onMounted(() => {
   const modelsStore = useModelConfigStore()
   const proxyStore = useProxyStore()
   const errorStore = useErrorStore()
+  const updateStore = useUpdateStore()
 
   settingsStore.applyColorMode()
   settingsStore.applyLanguage()
@@ -28,6 +31,7 @@ onMounted(() => {
   modelsStore.loadFromDisk()
   proxyStore.initListeners()
   errorStore.initListeners()
+  updateStore.checkUpdate()
 
   initTray(t)
 
@@ -59,5 +63,6 @@ useEventListener(document, 'contextmenu', (event) => {
     </SidebarLayout>
   </SidebarProvider>
   <GlobalErrorDialog />
+  <UpdateDialog />
   <Toaster position="top-center" />
 </template>

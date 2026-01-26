@@ -13,6 +13,7 @@
     "core:window:allow-close",
     "core:window:allow-set-focus",
     "core:window:allow-unminimize",
-    "process:default"
+    "process:default",
+    "opener:default"
   ]
 }

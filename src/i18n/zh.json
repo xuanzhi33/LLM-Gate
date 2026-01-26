@@ -12,7 +12,8 @@
     "modelCount": "暂无模型 | 共 1 个模型 | 共 {count} 个模型",
     "resultCount": "无结果 | 共 1 个结果 | 共 {count} 个结果",
     "error": "发生了错误",
-    "ok": "确定"
+    "ok": "确定",
+    "cancel": "取消"
   },
   "errors": {
     "proxyStart": "未能成功启动网关服务",
@@ -61,6 +62,24 @@
       "autoStartDesc": "在应用启动时自动开启 LLM 网关服务。",
       "exposeServer": "允许局域网访问",
       "exposeServerDesc": "允许来自局域网中的其他设备的访问。仅当您信任这些设备时启用。"
+    },
+    "update": {
+      "available": "发现新版本",
+      "downloading": "正在下载更新...",
+      "installing": "正在安装更新...",
+      "updating": "更新中...",
+      "update_now": "立即更新",
+      "restart": "立即重启",
+      "ready": "更新已安装，重启应用以生效。",
+      "checkUpdate": "检查更新",
+      "noUpdate": "当前已是最新版本",
+      "checkError": "检查更新失败"
+    },
+    "about": {
+      "title": "关于",
+      "version": "版本",
+      "repo": "源代码仓库",
+      "reportIssue": "反馈 Bug"
     }
   },
   "models": {
