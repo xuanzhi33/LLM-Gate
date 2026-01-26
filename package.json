@@ -16,7 +16,8 @@
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix --cache",
     "format": "prettier --write --experimental-cli src/",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "zh-hant": "tsx ./scripts/zh-hant.ts"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
@@ -47,6 +48,7 @@
     "@tsconfig/node24": "^24.0.3",
     "@types/jsdom": "^27.0.0",
     "@types/node": "^24.10.4",
+    "@types/opencc-js": "^1.0.3",
     "@vitejs/plugin-vue": "^6.0.3",
     "@vitest/eslint-plugin": "^1.6.5",
     "@vue/eslint-config-prettier": "^10.2.0",
@@ -58,7 +60,9 @@
     "jiti": "^2.6.1",
     "jsdom": "^27.4.0",
     "npm-run-all2": "^8.0.4",
+    "opencc-js": "^1.0.5",
     "prettier": "3.7.4",
+    "tsx": "^4.21.0",
     "tw-animate-css": "^1.4.0",
     "typescript": "~5.9.3",
     "vite": "^7.3.0",

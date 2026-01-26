@@ -46,11 +46,7 @@
         "dark": "深色模式",
         "system": "跟随系统"
       },
-      "language": "语言",
-      "languageOptions": {
-        "en": "英语 - English",
-        "zh": "简体中文 - Chinese (Simplified)"
-      }
+      "language": "语言"
     },
     "app": {
       "title": "功能设置",
@@ -99,7 +95,7 @@
       "modelDesc": "留空则保留原始请求中的模型",
       "baseUrl": "提供商 Base URL",
       "baseUrlPlaceholder": "例如：https://api.openai.com/v1",
-      "baseUrlDesc": "以 https:// 开头，以 /v1 结尾",
+      "baseUrlDesc": "以 https:// 开头，通常以 /v1 结尾",
       "apiKey": "API Key",
       "apiKeyPlaceholder": "例如：sk-xxxxxx",
       "apiKeyDesc": "留空则保留原始请求头中的 API Key",

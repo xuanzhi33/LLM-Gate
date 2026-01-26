@@ -46,11 +46,7 @@
         "dark": "Dark Mode",
         "system": "Follow System"
       },
-      "language": "Language",
-      "languageOptions": {
-        "en": "English",
-        "zh": "Chinese (Simplified) - 简体中文"
-      }
+      "language": "Language"
     },
     "app": {
       "title": "Features",
@@ -99,7 +95,7 @@
       "modelDesc": "Leave empty to keep the model from the original request",
       "baseUrl": "Base URL",
       "baseUrlPlaceholder": "e.g., https://api.openai.com/v1",
-      "baseUrlDesc": "Starts with https:// and ends with /v1",
+      "baseUrlDesc": "Starts with https:// and usually ends with /v1",
       "apiKey": "API Key",
       "apiKeyPlaceholder": "e.g., sk-xxxxxx",
       "apiKeyDesc": "Leave empty to keep the original API Key from the request headers",

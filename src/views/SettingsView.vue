@@ -12,6 +12,7 @@ import { openUrl } from '@tauri-apps/plugin-opener'
 import Badge from '@/components/ui/badge/Badge.vue'
 import packageJson from '../../package.json'
 import { ButtonGroup } from '@/components/ui/button-group'
+import { languageNames } from '@/i18n/config'
 
 const settingsStore = useSettingsStore()
 const updateStore = useUpdateStore()
@@ -41,7 +42,7 @@ const colorOptions = computed(() => {
 })
 
 const localeOptions = computed(() => availableLocales.map(loc => ({
-  label: t(`settings.interface.languageOptions.${loc}`),
+  label: languageNames[loc as keyof typeof languageNames] || loc,
   value: loc
 })))
 
