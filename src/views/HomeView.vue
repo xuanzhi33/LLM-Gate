@@ -1,12 +1,14 @@
 <script lang="ts" setup>
 import ServiceStatusCard from '@/components/dashboard/ServiceStatusCard.vue';
+import ModelConnectionCard from '@/components/dashboard/ModelConnectionCard.vue';
 
 </script>
 
 <template>
-  <div class="p-10 h-full flex items-center">
+  <div class="p-4 h-full">
 
-    <ServiceStatusCard class="flex-1" />
+    <ServiceStatusCard />
+    <ModelConnectionCard class="mt-5" />
 
   </div>
 </template>

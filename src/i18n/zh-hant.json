@@ -31,6 +31,29 @@
       "listening": "監聽地址 {host}:{port}",
       "requestCount": "請求數"
     },
+    "modelConnection": {
+      "title": "模型呼叫",
+      "noModels": "暫未配置模型",
+      "manageModels": "管理模型",
+      "selectModel": "選擇模型",
+      "urlFormat": "URL 格式",
+      "formats": {
+        "base": "基礎 URL",
+        "openai": "OpenAI 相容 (/chat/completions)",
+        "openai_new": "OpenAI 新版 (/responses)",
+        "anthropic": "Anthropic (/messages)"
+      },
+      "copySuccess": "已複製到剪貼簿",
+      "copyFail": "複製失敗",
+      "description": "在第三方應用中連線 LLM Gate 中配置的模型",
+      "baseUrl": "在 Base URL 配置中填寫以下地址",
+      "noBaseUrl": "該模型沒有配置提供商 Base URL，請前往配置或者選擇其他模型。",
+      "forwardingInfo": "API 請求將會被轉發到",
+      "hasModel": "將會忽略原請求中指定的模型名稱，並強制使用",
+      "noModelSpecified": "當前模型未配置模型名稱，將會跟隨原請求中指定的模型",
+      "hasApiKey": "已配置 API Key。原請求中的 API Key 將被替換，所以第三方應用中的 API Key 可以留空或填寫任意內容。",
+      "noApiKey": "未配置 API Key。將會使用原請求中攜帶的 API Key。"
+    },
     "actions": {
       "start": "啟動服務",
       "stop": "停止服務"

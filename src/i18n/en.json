@@ -31,6 +31,29 @@
       "listening": "Listening on {host}:{port}",
       "requestCount": "Request Count"
     },
+    "modelConnection": {
+      "title": "Model Connection",
+      "noModels": "No models configured.",
+      "manageModels": "Manage Models",
+      "selectModel": "Select Model",
+      "urlFormat": "URL Format",
+      "formats": {
+        "base": "Base URL",
+        "openai": "OpenAI Compatible (/chat/completions)",
+        "openai_new": "OpenAI New (/responses)",
+        "anthropic": "Anthropic (/messages)"
+      },
+      "copySuccess": "Copied to clipboard",
+      "copyFail": "Failed to copy",
+      "description": "Connect models configured in LLM Gate in third-party applications",
+      "baseUrl": "Fill in the following address in the Base URL configuration",
+      "noBaseUrl": "This model does not have a configured Base URL. Please go to configuration or choose another model.",
+      "forwardingInfo": "API requests will be forwarded to",
+      "hasModel": "The model name specified in the original request will be ignored and forced to use",
+      "noModelSpecified": "The current model has no model name configured and will follow the model specified in the original request.",
+      "hasApiKey": "API Key configured. The API Key in the original request will be replaced, so the API Key in the third-party application can be left blank or filled in with anything.",
+      "noApiKey": "API Key is not configured. The API Key carried in the original request will be used."
+    },
     "actions": {
       "start": "Start Service",
       "stop": "Stop Service"
