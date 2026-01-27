@@ -2,20 +2,20 @@
 
 ## Project Overview
 
-LLM Gate is a Tauri-based desktop application for proxying LLM API requests with automatic key injection and CORS support. It's a hybrid architecture with Vue 3 frontend and Rust backend.
+LLM Gate is a Tauri-based desktop application for proxying LLM API requests with automatic key injection and CORS support. It employs a hybrid architecture with a Vue 3 frontend and a Rust backend.
 
-**Stack**: 
+**Stack**:
 - **Frontend**: Tauri v2 + Vue 3 + TypeScript + Vite + Pinia + shadcn-vue (reka-ui) + Tailwind CSS 4 + vue-sonner + @tanstack/vue-table
-- **Backend**: Rust + Axum (HTTP Server) + Reqwest (HTTP Client) + Tokio (Async Runtime)
+- **Backend**: Rust + Axum 0.8 (HTTP Server) + Reqwest (HTTP Client) + Tokio (Async Runtime) + Tower-HTTP
 
 ## Architecture
 
 ### Frontend-Backend Communication
 
-- **Frontend**: Vue SPA with hash routing (`createWebHashHistory`).
-- **Backend**: Tauri Rust plugins for native OS interactions and a custom `axum` proxy server.
-- **Data Persistence**: 
-  - **App Data**: Uses Tauri's `plugin-fs` writing to `BaseDirectory.AppLocalData` (JSON files).
+- **Frontend**: Vue SPA using hash routing (`createWebHashHistory`).
+- **Backend**: Tauri Rust plugins for native OS interactions (`fs`, `log`, `updater`, `single-instance`, `process`) and a custom `axum` proxy server.
+- **Data Persistence**:
+  - **App Data**: Uses Tauri's `plugin-fs` to write to `BaseDirectory.AppLocalData` (JSON files).
   - **Settings**: Uses `localStorage` with prefix `xuanzhi33-`.
 - **State**: Pinia stores. `useModelConfigStore` auto-saves to local JSON files; `useSettingsStore` auto-saves to `localStorage`.
 
@@ -33,28 +33,15 @@ The core feature is a local proxy server running within the Tauri application:
     -   Forwards request to upstream provider using `reqwest`.
     -   Streams response back to the client.
 
-### Key Integration Pattern
-
-State persistence follows this pattern (see `src/stores/models.ts`):
-
-```typescript
-// Data flows: Pinia store <-> Tauri FS plugin <-> Local JSON
-const saveToDisk = useDebounceFn(async () => {
-  saveJSON(configs.value, CONFIG_FILE) // Uses @tauri-apps/plugin-fs abstraction
-}, 1000)
-```
-
-Files are saved to app-specific directory automatically by Tauri. Never hardcode file paths; use `BaseDirectory.AppLocalData` via `src/utils/app-data.ts`.
-
 ## Development Workflow
 
 ### Running the App
 
 ```bash
-pnpm tauri dev  # Starts both Vite dev server (port 15173) and Tauri
+pnpm tauri dev  # Starts both Vite dev server and Tauri
 ```
 
-- DevTools open automatically in debug builds (see `src-tauri/src/lib.rs`).
+- DevTools open automatically in debug builds.
 - Frontend auto-reloads on changes; Rust requires full restart.
 
 ### Building
@@ -85,11 +72,6 @@ Uses **shadcn-vue** (reka-ui primitives) with New York style:
 - Import from barrel files: `import { Button } from '@/components/ui/button'`.
 - Icons: Use `lucide-vue-next`.
 
-### Path Aliases
-
-- `@/` maps to `src/` (configured in both Vite and TypeScript).
-- Always use path aliases for imports: `@/components`, `@/stores`, `@/utils`.
-
 ### Styling
 
 - **Tailwind CSS v4** (uses `@tailwindcss/vite` plugin).
@@ -99,89 +81,53 @@ Uses **shadcn-vue** (reka-ui primitives) with New York style:
 
 ### Internationalization
 
-- **vue-i18n** with composition API (`const { t } = useI18n()`).
-- Locale files: `src/i18n/en.json`, `src/i18n/zh.json`.
-- Language auto-detected from browser with `usePreferredLanguages()`.
+- **vue-i18n** with composition API.
+- Locale files: `src/i18n/en.json`, `src/i18n/zh.json`, `src/i18n/zh-hant.json`.
+- Script: `pnpm zh-hant` generates Traditional Chinese from Simplified.
 - Current locale stored in `localStorage` with prefix `xuanzhi33-`.
 
 ### State Management
 
 - **Pinia** stores with composition API.
 - Use `useDebounceFn` from `@vueuse/core` for auto-save (1s debounce) to disk.
-- Initialize stores by calling `loadFromDisk` (or similar) in `App.vue`'s `onMounted`.
 
 ## Common Utilities & Components
 
 - **App Data**: `src/utils/app-data.ts` - Abstraction for Tauri FS (JSON/Text).
 - **Proxy Client**: `src/utils/proxy.ts` - Wrapper for proxy-related Tauri commands.
 - **Logging**: `src/utils/log.ts` - Structured logging using `tauri-plugin-log`.
-- **Tray & Window**: `src/utils/tray.ts` and `src/utils/window.ts` - System tray and window management.
-- **URL Utils**: `src/utils/url.ts` - Domain name extraction and normalization.
-- **EditableField**: `src/components/common/EditableField.vue` - Reusable field for viewing/editing values with validation and copy-to-clipboard support.
+- **EditableField**: `src/components/common/EditableField.vue` - Reusable field for viewing/editing values.
 - **ID Generation**: Use `nanoid`.
-
-## Tauri-Specific Patterns
-
-### File System Operations
-
-Always use the abstraction layer in `src/utils/app-data.ts`:
-
-```typescript
-import { saveJSON, loadJSON } from '@/utils/app-data'
-await saveJSON(data, 'config.json') // Automatically uses AppLocalData
-```
-
-### Logging
-
-Tauri plugin provides structured logging:
-
-```typescript
-import { info } from '@tauri-apps/plugin-log'
-info('Message') // Logs to file in production
-```
-
-### Window Management
-
-Main window config in `src-tauri/tauri.conf.json`:
-
-- Default size: 800x400.
-- Identifier: `cn.xuanzhi33.llm-gate`.
-- DevTools auto-open in debug builds.
 
 ## Important Files
 
 ### Configuration
 
-- `components.json` - shadcn-vue configuration (New York style, lucide icons).
+- `components.json` - shadcn-vue configuration.
 - `src-tauri/tauri.conf.json` - Tauri app config, security policies, build settings.
-- `vite.config.ts` - Dev server (port 15173), path aliases, Tailwind plugin.
+- `vite.config.ts` - Dev server, path aliases, Tailwind plugin.
 
 ### Core Application
 
 - `src/stores/models.ts` - Model configuration store with auto-persistence.
-- `src/stores/settings.ts` - App settings (theme, language, logging).
-- `src/stores/proxy.ts` - Proxy server state and control (start/stop/restart).
-- `src/stores/error.ts` - Global error handling and dialog state.
+- `src/stores/settings.ts` - App settings.
+- `src/stores/proxy.ts` - Proxy server state and control.
+- `src/stores/update.ts` - App update logic (check/download/install).
 - `src/utils/app-data.ts` - Tauri FS abstraction layer.
 
 ### Backend (Rust)
 
-- `src-tauri/src/lib.rs` - Entry point, plugin initialization, logging setup.
-- `src-tauri/src/proxy.rs` - **Core Logic**: Axum server implementation, request forwarding, `start`/`stop` commands.
-- `src-tauri/src/config.rs` - Backend configuration loader (reads `model-config.json` directly).
+- `src-tauri/src/lib.rs` - Entry point, plugin initialization.
+- `src-tauri/src/proxy.rs` - **Core Logic**: Axum server implementation.
+- `src-tauri/src/config.rs` - Backend configuration loader.
+- `src-tauri/src/events.rs` - Event definitions and handling.
 
 ## Common Tasks
 
-**Adding a new UI component**: Use shadcn-vue patterns with reka-ui primitives. Follow existing components in `src/components/ui/`.
+**Adding a new UI component**: Use shadcn-vue patterns. Follow existing components in `src/components/ui/`.
 
-**Adding Tauri commands**: Define in `src-tauri/src/lib.rs` (or a module like `proxy.rs`), export via `#[tauri::command]`, invoke from frontend via `@tauri-apps/api`.
+**Adding Tauri commands**: Define in `src-tauri/src/lib.rs` (or modules), export via `#[tauri::command]`.
 
-**Adding translations**: Update both `src/i18n/en.json` and `src/i18n/zh.json` with matching keys.
-
-**Persisting data**: 
+**Persisting data**:
 - For app data (lists, configs): Use `saveJSON`/`loadJSON` from `@/utils/app-data`.
 - For simple flags/settings: Use `localStorage` via `useSettingsStore`.
-
-**Adding routes**: Update `src/router/index.ts` with hash mode routing.
-
-**Generating IDs**: Use `nanoid()` for new entity IDs.
