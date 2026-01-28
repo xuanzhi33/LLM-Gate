@@ -21,7 +21,7 @@
         "fullscreen": false,
         "transparent": true,
         "windowEffects": {
-          "effects": ["acrylic"]
+          "effects": ["acrylic", "sidebar"]
         }
       }
     ],

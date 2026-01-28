@@ -1,6 +1,6 @@
 {
   "name": "llm-gate",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": true,
   "type": "module",
   "homepage": "https://github.com/xuanzhi33/LLM-Gate",
