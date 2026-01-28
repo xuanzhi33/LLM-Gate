@@ -120,7 +120,7 @@
 }
 
 :root {
-  --radius: 0;
+  --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
   --card: oklch(1 0 0);
@@ -230,4 +230,29 @@ body {
 
 .animate-flash-border {
   animation: border-flash 1s ease-out;
+}
+
+:root,
+.dark,
+body {
+  background: transparent;
+  --sidebar: transparent;
+}
+
+main {
+  background: #ffffffdd;
+}
+.dark main {
+  background: #000000aa;
+}
+
+:root {
+  --sidebar-accent: #ffffff33;
+  --background: #ffffffdd;
+  --card: var(--background);
+}
+.dark {
+  --sidebar-accent: #00000033;
+  --background: #00000066;
+  --card: var(--background);
 }
