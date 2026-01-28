@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useProxyStore } from './proxy'
+import { setTheme } from '@tauri-apps/api/app'
 
 export type ColorMode = 'light' | 'dark' | 'system'
 
@@ -33,6 +34,7 @@ export const useSettingsStore = defineStore('settings', () => {
 
   const applyColorMode = () => {
     document.documentElement.classList.toggle('dark', isDarkMode.value)
+    setTheme(isDarkMode.value ? 'dark' : 'light')
   }
 
   watch(isDarkMode, applyColorMode)

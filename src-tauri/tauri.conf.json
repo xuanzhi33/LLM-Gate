@@ -19,7 +19,10 @@
         "minWidth": 400,
         "resizable": true,
         "fullscreen": false,
-        "transparent": true
+        "transparent": true,
+        "windowEffects": {
+          "effects": ["acrylic"]
+        }
       }
     ],
     "security": {
@@ -43,7 +46,7 @@
     "windows": {
       "nsis": {
         "displayLanguageSelector": true,
-        "languages": ["English", "SimpChinese"]
+        "languages": ["English", "SimpChinese", "TradChinese"]
       }
     }
   },

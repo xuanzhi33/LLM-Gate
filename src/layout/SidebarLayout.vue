@@ -112,7 +112,7 @@ const toggleProxy = async () => {
       </SidebarMenu>
     </SidebarFooter>
   </Sidebar>
-  <SidebarInset class="overflow-y-hidden">
+  <SidebarInset class="overflow-y-hidden md:rounded-tl-2xl h-dvh">
     <SidebarTrigger v-if="isMobile" class="fixed bottom-0 left-0 m-2 bg-background" />
     <slot></slot>
   </SidebarInset>

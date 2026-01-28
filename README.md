@@ -7,6 +7,11 @@
 
 With LLM Gate, you can unify the management of all your LLM API Keys and provide them to other software via a local proxy service without exposing your real keys, while also perfectly resolving CORS issues.
 
+## 🎬 Screenshot
+
+![Screenshot of LLM Gate on Windows 11](./docs//images/win11.png)
+*(Shown in Dark Mode; Light Mode is also supported)*
+
 ## 📥 Download
 
 You can download the latest version from the [**Releases**](../../releases/latest) page.
@@ -37,7 +42,7 @@ You can download the latest version from the [**Releases**](../../releases/lates
 2.  **Add a Model**:
     - Open LLM Gate and click "Add Model".
     - Fill in the **Model ID** (used in the local URL), **Base URL** (e.g., `https://api.openai.com/v1`), and **API Key**.
-    - *(Optional)* Fill in the **Model Name**. If provided, LLM Gate will automatically override the `model` parameter in your requests with this value. This is useful for clients that enforce specific model names.
+    - _(Optional)_ Fill in the **Model Name**. If provided, LLM Gate will automatically override the `model` parameter in your requests with this value. This is useful for clients that enforce specific model names.
 3.  **Start Proxy**:
     - Set the proxy port on the home page (default is `11456`).
     - Click the "Start Server" button.

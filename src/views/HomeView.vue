@@ -5,7 +5,7 @@ import ModelConnectionCard from '@/components/dashboard/ModelConnectionCard.vue'
 </script>
 
 <template>
-  <div class="p-4 h-full">
+  <div class="p-4 h-full overflow-y-auto">
 
     <ServiceStatusCard />
     <ModelConnectionCard class="mt-5" />

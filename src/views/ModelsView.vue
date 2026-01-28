@@ -69,7 +69,7 @@ const confirmDelete = () => {
 </script>
 
 <template>
-  <div class="p-4 space-y-3">
+  <div class="p-4 space-y-3 h-full overflow-y-auto">
     <!-- Header -->
     <div class="flex items-center justify-between">
       <div>
