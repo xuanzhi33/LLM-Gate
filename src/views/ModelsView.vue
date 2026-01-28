@@ -51,6 +51,20 @@ const handleAddModel = () => {
   searchQuery.value = ''
 }
 
+// Copy model
+const handleCopyModel = (id: string) => {
+  const original = modelStore.getById(id)
+  if (!original) return
+
+  const newId = nanoid(6)
+  modelStore.addConfig({
+    ...original,
+    id: newId
+  })
+  newlyCreatedId.value = newId
+  searchQuery.value = ''
+}
+
 // Open delete confirmation dialog
 const openDeleteDialog = (id: string) => {
   modelToDelete.value = id
@@ -103,7 +117,7 @@ const confirmDelete = () => {
       <TransitionGroup name="list">
 
         <ModelCard v-for="model in filteredModels" :key="model.id" :model="model" :is-new="model.id === newlyCreatedId"
-          @delete="openDeleteDialog" />
+          @delete="openDeleteDialog" @copy="handleCopyModel" />
       </TransitionGroup>
     </div>
 

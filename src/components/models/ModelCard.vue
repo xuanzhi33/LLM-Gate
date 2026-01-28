@@ -10,12 +10,13 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import EditableField from '@/components/common/EditableField.vue'
-import { Trash2, Link2, Key, Hash, FileText, Sparkle } from 'lucide-vue-next'
+import { Trash2, Link2, Key, Hash, FileText, Sparkle, Copy } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
 import CardTitle from '../ui/card/CardTitle.vue'
 import { getDomainName } from '@/utils/url'
 import Badge from '../ui/badge/Badge.vue'
 import CardAction from '../ui/card/CardAction.vue'
+import { ButtonGroup } from '../ui/button-group'
 
 interface Props {
   model: ModelConfig
@@ -28,6 +29,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<{
   delete: [id: string]
+  copy: [id: string]
 }>()
 
 const { t } = useI18n()
@@ -60,18 +62,35 @@ const validateId = (val: string) => {
         </Badge>
       </CardTitle>
       <CardAction class="-m-1">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger as-child>
-              <Button variant="ghost" size="icon-sm" @click="emit('delete', model.id)">
-                <Trash2 class="text-destructive" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{{ t('models.delete') }}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <ButtonGroup>
+
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger as-child>
+                <Button variant="secondary" size="icon-sm" @click="emit('copy', model.id)">
+                  <Copy class="text-muted-foreground" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{{ t('common.copy') }}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger as-child>
+                <Button variant="secondary" size="icon-sm" @click="emit('delete', model.id)">
+                  <Trash2 class="text-destructive" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{{ t('models.delete') }}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </ButtonGroup>
+
       </CardAction>
     </CardHeader>
 
