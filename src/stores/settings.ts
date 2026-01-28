@@ -34,10 +34,15 @@ export const useSettingsStore = defineStore('settings', () => {
 
   const applyColorMode = () => {
     document.documentElement.classList.toggle('dark', isDarkMode.value)
-    setTheme(isDarkMode.value ? 'dark' : 'light')
+
+    if (colorMode.value === 'system') {
+      setTheme(null)
+    } else {
+      setTheme(isDarkMode.value ? 'dark' : 'light')
+    }
   }
 
-  watch(isDarkMode, applyColorMode)
+  watch([isDarkMode, colorMode], applyColorMode)
 
   const applyLanguage = () => {
     locale.value = language.value

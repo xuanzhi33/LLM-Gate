@@ -22,7 +22,8 @@
         "transparent": true,
         "windowEffects": {
           "effects": ["acrylic", "sidebar"]
-        }
+        },
+        "titleBarStyle": "Transparent"
       }
     ],
     "security": {
