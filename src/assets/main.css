@@ -211,6 +211,7 @@
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
+  transform: scale(0.2);
 }
 
 body {
