@@ -135,6 +135,18 @@
     "errors": {
       "idRequired": "模型 ID 不能為空",
       "idExists": "模型 ID 已存在"
+    },
+    "wizard": {
+      "title": "快速新增嚮導",
+      "description": "選擇提供商並填寫 API Key 以快速新增模型。",
+      "provider": "提供商",
+      "selectProvider": "選擇提供商",
+      "getApiKey": "獲取 API Key",
+      "verify": "校驗 Key 並獲取模型列表",
+      "selectModel": "選擇模型",
+      "finish": "完成",
+      "verifySuccess": "成功獲取模型列表",
+      "verifyFail": "獲取模型列表失敗"
     }
   },
   "menu": {

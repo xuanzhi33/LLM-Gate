@@ -45,6 +45,10 @@ export const useModelConfigStore = defineStore('modelConfig', () => {
     saveJSON(configs.value, CONFIG_FILE)
   }, 1000)
 
+  const saveNow = async () => {
+    await saveJSON(configs.value, CONFIG_FILE)
+  }
+
   const loadFromDisk = async () => {
     const data = await loadJSON<ModelConfig[]>(CONFIG_FILE)
     if (data) {
@@ -68,6 +72,7 @@ export const useModelConfigStore = defineStore('modelConfig', () => {
     updateConfig,
     removeConfig,
     reset,
+    saveNow,
     loadFromDisk,
   }
 })

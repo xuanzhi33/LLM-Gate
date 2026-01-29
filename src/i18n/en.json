@@ -135,6 +135,18 @@
     "errors": {
       "idRequired": "Model ID is required",
       "idExists": "Model ID already exists"
+    },
+    "wizard": {
+      "title": "Quick Add Wizard",
+      "description": "Select a provider and enter API Key to quickly add a model.",
+      "provider": "Provider",
+      "selectProvider": "Select Provider",
+      "getApiKey": "Get API Key",
+      "verify": "Verify Key & Get Models",
+      "selectModel": "Select Model",
+      "finish": "Finish",
+      "verifySuccess": "Successfully retrieved model list",
+      "verifyFail": "Failed to retrieve models"
     }
   },
   "menu": {

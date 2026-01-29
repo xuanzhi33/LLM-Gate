@@ -5,6 +5,7 @@ import { useModelConfigStore } from '@/stores/models'
 import { Button } from '@/components/ui/button'
 import ModelCard from '@/components/models/ModelCard.vue'
 import ModelDeleteDialog from '@/components/models/ModelDeleteDialog.vue'
+import ModelWizardDialog from '@/components/models/ModelWizardDialog.vue'
 import { Plus, Search, Package, Sparkles } from 'lucide-vue-next'
 import { nanoid } from 'nanoid'
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
@@ -95,10 +96,13 @@ const confirmDelete = () => {
           {{ t('common.modelCount', modelStore.count) }}
         </div>
       </div>
-      <Button @click="handleAddModel">
-        <Plus />
-        {{ t('models.add') }}
-      </Button>
+      <div class="flex gap-2">
+        <ModelWizardDialog />
+        <Button @click="handleAddModel">
+          <Plus />
+          {{ t('models.add') }}
+        </Button>
+      </div>
     </div>
 
     <!-- Search box -->
