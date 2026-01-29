@@ -1,3 +1,5 @@
+[**English**](./README.md) | [**简体中文**](./README-CN.md)
+
 # LLM Gate
 
 **LLM Gate** is a lightweight local AI gateway designed to securely proxy LLM API requests. Built on Tauri, it boasts a tiny footprint and native-level performance, supporting Windows and macOS.
