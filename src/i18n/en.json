@@ -13,7 +13,8 @@
     "resultCount": "No results | 1 result | {count} results",
     "error": "An error occurred",
     "ok": "OK",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "undo": "Undo"
   },
   "errors": {
     "proxyStart": "Failed to start the gateway server",
@@ -107,6 +108,7 @@
     "add": "Add Model",
     "edit": "Edit Model",
     "delete": "Delete Model",
+    "deleted": "Model deleted",
     "empty": "No models configured yet",
     "emptyFiltered": "No models match your search",
     "form": {

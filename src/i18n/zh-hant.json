@@ -13,7 +13,8 @@
     "resultCount": "無結果 | 共 1 個結果 | 共 {count} 個結果",
     "error": "發生了錯誤",
     "ok": "確定",
-    "cancel": "取消"
+    "cancel": "取消",
+    "undo": "撤銷"
   },
   "errors": {
     "proxyStart": "未能成功啟動閘道器服務",
@@ -107,6 +108,7 @@
     "add": "新增模型",
     "edit": "編輯模型",
     "delete": "刪除模型",
+    "deleted": "模型已刪除",
     "empty": "暫無配置的模型",
     "emptyFiltered": "沒有匹配的模型",
     "form": {

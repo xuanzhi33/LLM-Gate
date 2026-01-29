@@ -4,11 +4,11 @@ import { ref, computed } from 'vue'
 import { useModelConfigStore } from '@/stores/models'
 import { Button } from '@/components/ui/button'
 import ModelCard from '@/components/models/ModelCard.vue'
-import ModelDeleteDialog from '@/components/models/ModelDeleteDialog.vue'
 import ModelWizardDialog from '@/components/models/ModelWizardDialog.vue'
 import { Plus, Search, Package, Sparkles } from 'lucide-vue-next'
 import { nanoid } from 'nanoid'
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
+import { toast } from 'vue-sonner'
 
 const { t } = useI18n()
 const modelStore = useModelConfigStore()
@@ -33,10 +33,6 @@ const filteredModels = computed(() => {
 
 // Highlight newly created model
 const newlyCreatedId = ref<string | null>(null)
-
-// Delete confirmation dialog
-const showDeleteDialog = ref(false)
-const modelToDelete = ref<string | null>(null)
 
 // Add new model
 const handleAddModel = () => {
@@ -66,19 +62,23 @@ const handleCopyModel = (id: string) => {
   searchQuery.value = ''
 }
 
-// Open delete confirmation dialog
-const openDeleteDialog = (id: string) => {
-  modelToDelete.value = id
-  showDeleteDialog.value = true
-}
+// Delete model
+const handleDeleteModel = (id: string) => {
+  const model = modelStore.getById(id)
+  if (!model) return
 
-// Confirm deletion
-const confirmDelete = () => {
-  if (modelToDelete.value) {
-    modelStore.removeConfig(modelToDelete.value)
-    showDeleteDialog.value = false
-    modelToDelete.value = null
-  }
+  const backup = { ...model }
+  modelStore.removeConfig(id)
+
+  toast.success(t('models.deleted'), {
+    description: model.model || model.id,
+    action: {
+      label: t('common.undo'),
+      onClick: () => {
+        modelStore.addConfig(backup)
+      },
+    },
+  })
 }
 
 </script>
@@ -121,7 +121,7 @@ const confirmDelete = () => {
       <TransitionGroup name="list">
 
         <ModelCard v-for="model in filteredModels" :key="model.id" :model="model" :is-new="model.id === newlyCreatedId"
-          @delete="openDeleteDialog" @copy="handleCopyModel" />
+          @delete="handleDeleteModel" @copy="handleCopyModel" />
       </TransitionGroup>
     </div>
 
@@ -139,8 +139,5 @@ const confirmDelete = () => {
         </p>
       </div>
     </div>
-
-    <!-- Delete confirmation dialog -->
-    <ModelDeleteDialog v-model:open="showDeleteDialog" @confirm="confirmDelete" />
   </div>
 </template>

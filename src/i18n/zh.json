@@ -13,7 +13,8 @@
     "resultCount": "无结果 | 共 1 个结果 | 共 {count} 个结果",
     "error": "发生了错误",
     "ok": "确定",
-    "cancel": "取消"
+    "cancel": "取消",
+    "undo": "撤销"
   },
   "errors": {
     "proxyStart": "未能成功启动网关服务",
@@ -107,6 +108,7 @@
     "add": "添加模型",
     "edit": "编辑模型",
     "delete": "删除模型",
+    "deleted": "模型已删除",
     "empty": "暂无配置的模型",
     "emptyFiltered": "没有匹配的模型",
     "form": {
