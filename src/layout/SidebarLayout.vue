@@ -60,7 +60,7 @@ const toggleProxy = async () => {
 </script>
 
 <template>
-  <Sidebar collapsible="icon">
+  <Sidebar collapsible="icon" variant="inset">
     <SidebarHeader>
       <SidebarMenu>
         <SidebarMenuItem>
@@ -112,7 +112,7 @@ const toggleProxy = async () => {
       </SidebarMenu>
     </SidebarFooter>
   </Sidebar>
-  <SidebarInset class="overflow-y-hidden md:rounded-tl-2xl h-dvh">
+  <SidebarInset class="overflow-y-hidden md:rounded-tl-2xl h-dvh md:h-[calc(100dvh-1rem)]">
     <SidebarTrigger v-if="isMobile" class="fixed bottom-0 left-0 m-2 bg-background" />
     <slot></slot>
   </SidebarInset>

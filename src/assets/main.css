@@ -256,3 +256,25 @@ main {
   --background: #00000066;
   --card: var(--background);
 }
+
+::-webkit-scrollbar {
+  --scrollbar-width: 14px;
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-muted-foreground);
+  border: 5px solid transparent;
+  background-clip: padding-box;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-accent-foreground);
+  border-width: 4px;
+}

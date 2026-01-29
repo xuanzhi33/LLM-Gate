@@ -8,7 +8,7 @@ import ModelConnectionCard from '@/components/dashboard/ModelConnectionCard.vue'
   <div class="p-4 h-full overflow-y-auto">
 
     <ServiceStatusCard />
-    <ModelConnectionCard class="mt-5" />
+    <ModelConnectionCard class="mt-4" />
 
   </div>
 </template>
