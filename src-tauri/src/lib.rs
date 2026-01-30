@@ -31,7 +31,10 @@ pub fn run() {
 
                 // Hide dock icon on macOS
                 #[cfg(target_os = "macos")]
-                app.set_dock_visibility(false);
+                {
+                    let app = window.app_handle();
+                    app.set_dock_visibility(false);
+                }
             }
         })
         .setup(|app| {
