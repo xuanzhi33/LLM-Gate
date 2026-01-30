@@ -49,6 +49,10 @@ pub fn run() {
                 )?;
             }
 
+            // Hide dock icon on macOS
+            #[cfg(target_os = "macos")]
+            app.set_activation_policy(tauri::ActivationPolicy::Accessory);
+
             Ok(())
         })
         .run(tauri::generate_context!())
