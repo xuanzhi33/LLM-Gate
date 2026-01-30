@@ -28,6 +28,10 @@ pub fn run() {
             if let tauri::WindowEvent::CloseRequested { api, .. } = event {
                 let _ = window.hide();
                 api.prevent_close();
+
+                // Hide dock icon on macOS
+                #[cfg(target_os = "macos")]
+                app.set_dock_visibility(false);
             }
         })
         .setup(|app| {
@@ -48,10 +52,6 @@ pub fn run() {
                         .build(),
                 )?;
             }
-
-            // Hide dock icon on macOS
-            #[cfg(target_os = "macos")]
-            app.set_dock_visibility(false);
 
             Ok(())
         })
