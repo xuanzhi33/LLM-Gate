@@ -28,11 +28,12 @@ const { copy, copied } = useClipboard({
 const selectedModelId = ref('')
 const urlFormat = ref('base')
 const urlFormats = ['base', 'openai', 'openai_new', 'anthropic']
+const reversedModels = computed(() => [...modelStore.configs].reverse())
 
 // Auto-select first model if none selected or current selection is invalid
 watch(() => modelStore.configs, (configs) => {
   if (configs.length > 0) {
-    const firstModel = configs[0]
+    const firstModel = reversedModels.value[0]
     if (firstModel && (!selectedModelId.value || !configs.find(c => c.id === selectedModelId.value))) {
       selectedModelId.value = firstModel.id
     }
@@ -112,7 +113,7 @@ const goToModels = () => {
               <SelectValue :placeholder="t('home.modelConnection.selectModel')" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem v-for="model in modelStore.configs" :key="model.id" :value="model.id">
+              <SelectItem v-for="model in reversedModels" :key="model.id" :value="model.id">
                 {{
                   model.baseUrl ?
                     getDomainName(model.baseUrl) + ' - ' : ''
