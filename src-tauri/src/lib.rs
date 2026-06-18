@@ -33,7 +33,7 @@ pub fn run() {
                 #[cfg(target_os = "macos")]
                 {
                     let app = window.app_handle();
-                    app.set_dock_visibility(false);
+                    let _ = app.set_dock_visibility(false);
                 }
             }
         })

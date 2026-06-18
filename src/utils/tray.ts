@@ -65,6 +65,7 @@ async function setupTray(t: ReturnType<typeof useI18n>['t']) {
       }
     },
     showMenuOnLeftClick: false,
+    iconAsTemplate: true,
     icon: trayImage,
   })
 }
