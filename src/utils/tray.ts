@@ -1,11 +1,12 @@
 import { TrayIcon } from '@tauri-apps/api/tray'
-import { defaultWindowIcon } from '@tauri-apps/api/app'
+import { Image } from '@tauri-apps/api/image'
 import { useI18n } from 'vue-i18n'
 import { showWindow } from './window'
 import { Menu } from '@tauri-apps/api/menu'
 import { watch } from 'vue'
 import { useSettingsStore } from '@/stores/settings'
 import { exit } from '@tauri-apps/plugin-process'
+import trayIconUrl from './tray-icon.png'
 
 const TRAY_ID = 'MAIN_TRAY'
 export async function initTray(t: ReturnType<typeof useI18n>['t']) {
@@ -43,6 +44,10 @@ async function setupTray(t: ReturnType<typeof useI18n>['t']) {
     ],
   })
 
+  const iconRes = await fetch(trayIconUrl)
+  const iconBuf = await iconRes.arrayBuffer()
+  const trayImage = await Image.fromBytes(iconBuf)
+
   await TrayIcon.new({
     menu,
     id: TRAY_ID,
@@ -60,6 +65,6 @@ async function setupTray(t: ReturnType<typeof useI18n>['t']) {
       }
     },
     showMenuOnLeftClick: false,
-    icon: (await defaultWindowIcon()) || undefined,
+    icon: trayImage,
   })
 }
